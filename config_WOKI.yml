@@ -1,0 +1,100 @@
+# Configuration file for GeoPressureR parameters
+#
+# This file stores all the parameters used by the GeoPressureR functions, following the best
+# practice to separate parameters from codes. These parameters are retrieved using config::get() of
+# the config R package <https://rstudio.github.io/config/>.
+#
+# This file is meant to be adapted based on your needs: feel free to add parameters either in the
+# default (applied to all tags) or for each tag seperatly (overwrite default). It is recommended to
+# specify all parameters used, even if you use the default value.
+#
+# You can check the documentation of each function to learn what each of these parameters are doing
+# as well as reading https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-workflow.html
+
+default:
+  tag_set_map: # ?tag_set_map()
+    extent: [15, 38, -25, 13] # [W, E, S, N]
+    scale: 4 # 1 (min) -> 1° ; 2 -> 0.5° ; 5 -> 0.25° ; 10 (max) -> 0.1°
+    include_min_duration: 0 # in hours
+    known:
+      stap_id: [1, -1] # -1 -> last stap
+      known_lon: 28.76857325
+      known_lat: -22.72463163
+  geopressure_map: # ?geopressure_map()
+    max_sample: 500
+    margin: 40 # in m
+    sd: 2
+    thr_mask: 0.9
+    log_linear_pooling_weight: !expr \(n) 5*log(n)/n
+  geolight_map: # ?geolight_map()
+    twl_calib_adjust: 1.4
+    twl_llp: !expr \(n) log(n)/n
+    compute_known: TRUE
+  geomag_calib:
+    calib_data:
+      crop_start: NULL
+      crop_end: NULL
+  geomag_map:
+    compute_known: TRUE
+  graph_create: # ?graph_create()
+    thr_likelihood: 0.95
+    thr_gs: 100 # km/h
+    likelihood: "map_pressure"
+  graph_add_wind:
+    thr_as: 80 # km/h
+    file: !expr \(stap_id, tag_id) glue::glue("/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/2-geolocator_data/WoodlandKingfisher/data/wind/{tag_id}/{tag_id}_{stap_id}.nc")
+  graph_set_movement: # ?graph_set_movement()
+    type: "as"
+    # method: "gamma"
+    # shape: 7 # only for gamma
+    # scale: 7
+    # location: 40 # only for logistic
+    low_speed_fix: 35 # km/h
+    zero_speed_ratio: 1.2
+  bird_create:
+    scientific_name: "Halcyon senegalensis"
+  graph_simulation: # ?graph_simulation()
+    nj: 100
+  pressurepath_create: # ?pressurepath_create()
+    variable: ["altitude", "surface_pressure"]
+    # solar_dep: 0
+  geopressuretemplate: # ?geopressuretemplate()
+    likelihood: ["map_pressure", "map_light"] #  for nothing
+    outputs: ["marginal", "most_likely", "simulation"]
+    pressurepath: ["most_likely"] # "geopressureviz"
+
+16LN:
+  color: "#70D6FF"
+  tag_create:
+    crop_start: "2017-01-10"
+    crop_end: "2017-12-10"
+
+16LO:
+  color: "#FF70A6"
+  tag_create:
+    crop_start: "2017-01-10"
+    crop_end: "2017-12-23"
+
+16LP:
+  color: "#FF9770"
+  tag_create:
+    crop_start: "2017-01-15"
+    crop_end: "2017-12-20"
+
+20IK:
+  color: "#FFD670"
+  tag_create:
+    crop_start: "2017-12-19"
+    crop_end: "2018-12-17"
+
+22NO:
+  color: "#E9FF70"
+  tag_create:
+    crop_start: "2019-01-24"
+    crop_end: "2019-09-29"
+  tag_set_map:
+    known:
+      stap_id: 1
+      known_lon: 28.76857325
+      known_lat: -22.72463163
+

@@ -1,0 +1,328 @@
+# Configuration file for GeoPressureR parameters
+#
+# This file stores all the parameters used by the GeoPressureR functions, following the best
+# practice to separate parameters from codes. These parameters are retrieved using config::get() of
+# the config R package <https://rstudio.github.io/config/>.
+#
+# This file is meant to be adapted based on your needs: feel free to add parameters either in the
+# default (applied to all tags) or for each tag seperatly (overwrite default). It is recommended to
+# specify all parameters used, even if you use the default value.
+#
+# You can check the documentation of each function to learn what each of these parameters are doing
+# as well as reading https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-workflow.html
+
+default:
+  tag_create: # ?tag_create()
+    # crop_start: NULL # Generally set at the tag level
+    # crop_end: NULL
+  tag_label: # ? tag_label()
+    warning_flight_duration: 0.5 # hours
+    warning_stap_duration: 1 # hours
+  tag_set_map: # ?tag_set_map()
+    extent: [-18, 23, 0, 50] # [W, E, S, N]
+    scale: 5 # 1 (min) -> 1° ; 2 -> 0.5° ; 5 -> 0.2° ; 10 (max) -> 0.1°
+    include_stap_id: NULL # default, take all
+    include_min_duration: 0 # in hours
+  geopressure_map: # ?geopressure_map()
+    max_sample: 400
+    margin: 20 # in m
+    sd: 0.9
+    thr_mask: 0.9
+    log_linear_pooling_weight: !expr \(n) 2*log(n)/n
+  twilight_create: # ?twilight_create()
+    # twl_thr: NULL
+    # twl_offset: NULL # in hours
+  geolight_map: # ?geolight_map()
+    twl_calib_adjust: 2
+    twl_llp: !expr \(n) log(n)/n
+    compute_known: TRUE
+  geomag_calib:
+    calib_data:
+      crop_start: NULL
+      crop_end: NULL
+  geomag_map:
+    compute_known: TRUE
+  graph_create: # ?graph_create()
+    thr_likelihood: 0.95
+    thr_gs: 120 # km/h
+    likelihood: "map_pressure"
+  graph_add_wind:
+    thr_as: 90 # km/h
+    file: !expr \(stap_id, tag_id) glue::glue("/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/2-geolocator_data/SwissHoopoe/data/wind/{tag_id}/{tag_id}_{stap_id}.nc")
+  graph_set_movement: # ?graph_set_movement()
+    type: "as"
+    # method: "gamma"
+    # shape: 7 # only for gamma
+    # scale: 7
+    # location: 40 # only for logistic
+    low_speed_fix: 15 # km/h
+    zero_speed_ratio: 2
+
+  graph_simulation: # ?graph_simulation()
+    nj: 10
+  pressurepath_create: # ?pressurepath_create()
+    variable: ["altitude", "surface_pressure"]
+    # solar_dep: 0
+  geopressuretemplate: # ?geopressuretemplate()
+    likelihood: ["map_pressure", "map_light"]
+    outputs: ["marginal", "most_likely", "simulation"]
+    pressurepath: ["most_likely"] # "geopressureviz"
+  bird_create:
+    scientific_name: Upupa epops
+
+12HM:
+  ring_number: H135111
+  sex: F
+  tag_create:
+    crop_start: '2015-07-21'
+    crop_end: '2016-06-27'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.20162018289623, 7.20845167030699]
+      known_lat: [46.1563663773383, 46.1632891044151]
+      start: ['2015-07-21', "2016-05-22"]
+      end: ['2015-08-23', "2016-06-27"]
+
+14DM:
+  ring_number: H126110
+  sex: M
+  tag_create:
+    crop_start: '2015-06-23'
+    crop_end: '2016-06-04'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.27559970996067, 7.25900491534156]
+      known_lat: [46.1994871899797, 46.1914829578791]
+
+14EJ:
+  ring_number: H117787
+  sex: M
+  tag_create:
+    crop_start: '2015-07-27'
+    crop_end: '2016-05-24'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.16428197635973, 7.16428197635973]
+      known_lat: [46.1626327396196, 46.1626327396196]
+
+14EZ:
+  ring_number: H126124
+  sex: M
+  tag_create:
+    crop_start: '2015-06-20'
+    crop_end: '2016-05-24'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.11641954807778, 7.11847786644807]
+      known_lat: [46.1319842914146, 46.1318102353494]
+
+14OD:
+  ring_number: H135121
+  sex: M
+  tag_create:
+    crop_start: '2015-07-26'
+    crop_end: '2016-06-07'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.4845954104707, 7.4565219391231]
+      known_lat: [46.2694371000451, 46.2601705616317]
+
+16AJ:
+  ring_number: H135182
+  sex: M
+  tag_create:
+    crop_start: '2016-06-07'
+    crop_end: '2017-06-03'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.20212040616355, 7.20212040616355]
+      known_lat: [46.1693750277182, 46.1693750277182]
+
+16BG:
+  ring_number: H126136
+  sex: F
+  tag_create:
+    crop_start: '2016-06-28'
+    crop_end: '2017-05-26'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.10270862100398, 7.2086974444517]
+      known_lat: [46.1249637501454, 46.1756225419391]
+
+16EG:
+  ring_number: H130918
+  sex: M
+  tag_create:
+    crop_start: '2016-06-17'
+    crop_end: '2017-05-25'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.20162018289623, 7.1339279567983]
+      known_lat: [46.1563663773383, 46.145535273918]
+
+16AQ:
+  ring_number: H135147
+  sex: M
+  tag_create:
+    crop_start: '2016-05-25'
+    crop_end: '2018-05-05'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.49144126097738, 7.49144126097738]
+      known_lat: [46.2662136900039, 46.2662136900039]
+
+16DL:
+  ring_number: H118000
+  sex: F
+  tag_create:
+    crop_start: '2016-05-25'
+    crop_end: '2017-05-16'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.4316866423507, 7.4316866423507]
+      known_lat: [46.2524535462462, 46.2524535462462]
+
+16DF:
+  ring_number: H126034
+  sex: F
+  tag_create:
+    crop_start: '2016-06-30'
+    crop_end: '2017-06-14'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.20014987375756, 7.20014987375756]
+      known_lat: [46.1669780610721, 46.1669780610721]
+
+16EF:
+  ring_number: H134234
+  sex: F
+  tag_create:
+    crop_start: '2016-06-29'
+    crop_end: '2017-06-06'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.19159733493077, 7.21116866845481]
+      known_lat: [46.1657452793459, 46.1730188256694]
+
+16DU:
+  ring_number: H130933
+  sex: M
+  tag_create:
+    crop_start: '2016-06-29'
+    crop_end: '2017-05-28'
+  tag_set_map:
+    known:
+      stap_id: [1]
+      known_lon: [7.15857713819396]
+      known_lat: [46.1592453939369]
+
+16DM:
+  ring_number: H135546
+  sex: M
+  tag_create:
+    crop_start: '2016-06-02'
+    crop_end: '2017-06-06'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.21057082318524, 7.21057082318524]
+      known_lat: [46.1766428395167, 46.1766428395167]
+
+16AO:
+  ring_number: H130913
+  sex: F
+  graph_create: # ?graph_create()
+    thr_likelihood: 0.95
+    thr_gs: 120
+  tag_create:
+    crop_start: '2016-06-11'
+    crop_end: '2017-05-04'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.11566903526147, 7.10871599765055]
+      known_lat: [46.1254333617045, 46.1242258380185]
+
+16BY:
+  ring_number: H135155
+  sex: F
+  tag_create:
+    crop_start: '2016-05-28'
+    crop_end: '2017-05-08'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.26221445400554, 7.26221445400554]
+      known_lat: [46.1963546210771, 46.1963546210771]
+
+16BZ:
+  ring_number: H130844
+  sex: F
+  tag_create:
+    crop_start: '2016-05-31'
+    crop_end: '2017-06-08'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.10372984543308, 7.10270862100398]
+      known_lat: [46.1272066858264, 46.1249637501454]
+
+16CD:
+  ring_number: H130863
+  sex: F
+  tag_create:
+    crop_start: '2016-06-04'
+    crop_end: '2017-05-10'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.19925538534866, 7.21120154927722]
+      known_lat: [46.1583853940655, 46.1744491890506]
+
+16CA:
+  ring_number: H130861
+  sex: F
+  tag_create:
+    crop_start: '2016-06-03'
+    crop_end: '2017-05-15'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      known_lon: [7.18324787259108, 7.19159733493077]
+      known_lat: [46.15993355771, 46.1657452793459]
+
+16CP:
+  ring_number: H130862
+  sex: M
+  tag_create:
+    crop_start: '2016-06-03'
+    crop_end: '2017-06-17'
+  tag_set_map:
+    known:
+      stap_id: [1]
+      known_lon: [7.18324787259108]
+      known_lat: [46.15993355771]
+
+16CC:
+  ring_number: H134236
+  sex: F
+  tag_create:
+    crop_start: '2016-06-29'
+    crop_end: '2017-05-31'
+  tag_set_map:
+    known:
+      stap_id: [1]
+      known_lon: [7.43465614520203]
+      known_lat: [46.2532003234325]

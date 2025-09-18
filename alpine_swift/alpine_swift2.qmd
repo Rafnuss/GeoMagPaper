@@ -1,0 +1,124 @@
+---
+title: "`r glue::glue('Report for {params$id}')`"
+format: html
+editor: visual 
+code-fold: true
+params:
+  id: "18IZ"
+  directory: "/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/2-geolocator_data/UNIT_Vogelzug/10 Raw data//ApuApuIL17/18IZ_20180619"
+---
+
+**Created on:** `r format(Sys.time(), "%Y-%m-%d %H:%M:%S")`
+
+## Setup
+
+```{r, setup, message=FALSE}
+library(GeoPressureR)
+library(ggplot2)
+library(plotly)
+library(terra)
+library(tidyverse)
+library(viridisLite)
+library(sf)
+library(rnaturalearth)
+library(patchwork)
+
+invisible(sapply(
+  list.files("/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/GeoMag/R", pattern = "\\.R$", full.names = TRUE),
+  function(f) source(f, local = globalenv(), echo = FALSE)
+))
+id <- params$id
+```
+
+```{r}
+tag <- tag_create(id,  directory = params$directory, quiet=T )
+```
+
+```{r}
+subplot(plot(tag, "pressure"), plot(tag, "twilight", plot_plotly = T), plot(tag, "actogram", plot_plotly = T), nrows = 3, shareX = TRUE, titleY = TRUE)
+```
+
+## Read and evaluate magnetic data
+
+```{r}
+tag <- geomag_calib(tag, calib_data=FALSE)
+```
+
+## Plot acceleration
+
+```{r, warning=FALSE}
+df_magnetic <- tag$magnetic %>%
+  filter(is_static < 1) %>%
+  pivot_longer(acceleration_x:acceleration_z, names_to = "Component", values_to = "Value")
+
+ggplot(df_magnetic, aes(x = Value)) +
+  geom_histogram(bins = 30, fill = "steelblue", color = "black", alpha = 0.7) +
+  facet_wrap(~Component, scales = "fixed") + # Fixed scales for uniform axes
+  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +
+  theme_minimal()
+```
+
+```{r}
+plot_mag(tag,"acceleration")
+```
+
+```{r}
+tag$magnetic %>%
+  filter(is_static) %>%
+  transmute(
+    pitch = pitch / pi * 180,
+    roll = roll / pi * 180
+  ) %>%
+  pivot_longer(cols = c(pitch, roll), names_to = "variable", values_to = "value") %>%
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 30, fill = "gray", color = "black") +
+  facet_wrap(~variable, scales = "free_x") +
+  labs(x = "Angle (degrees)", y = "Count") +
+  theme_minimal()
+```
+
+```{r}
+ggplotly(
+  tag$magnetic %>%
+    ggplot(aes(x = date, y = pitch/pi*180)) +
+    geom_line(color = "grey") +
+    geom_point(aes(color=is_static)) +
+    theme_bw() +
+    scale_y_continuous(name = "Pitch (°)"),
+  dynamicTicks = TRUE
+)
+```
+
+```{r}
+plot_mag(tag, type="calib")
+
+plotly::plot_ly() |>
+      plotly::add_markers(
+        data = tag$mag_calib,
+        x = ~magnetic_x, y = ~magnetic_y, z = ~magnetic_z,
+        marker = list(color = as.numeric(tag$mag_calib$date))
+      )
+
+```
+
+```{r}
+
+subplot(
+  ggplotly(
+  tag$magnetic %>%
+    ggplot(aes(x = date, y = I/pi*180)) +
+    geom_point(aes(color=is_static)) +
+    theme_bw() +
+    scale_y_continuous(name = "Inclination (°)"),
+  dynamicTicks = TRUE
+),
+ggplotly(
+  tag$magnetic %>%
+    ggplot(aes(x = date, y = F)) +
+    geom_point(aes(color=is_static)) +
+    theme_bw() +
+    scale_y_continuous(name = "Intensity"),
+  dynamicTicks = TRUE
+),
+  nrows = 2, shareX = TRUE, titleY = TRUE)
+```

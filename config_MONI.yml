@@ -1,0 +1,93 @@
+# Configuration file for GeoPressureR parameters
+#
+# This file stores all the parameters used by the GeoPressureR functions, following the best
+# practice to separate parameters from codes. These parameters are retrieved using config::get() of
+# the config R package <https://rstudio.github.io/config/>.
+#
+# This file is meant to be adapted based on your needs: feel free to add parameters either in the
+# default (applied to all tags) or for each tag seperatly (overwrite default). It is recommended to
+# specify all parameters used, even if you use the default value.
+#
+# You can check the documentation of each function to learn what each of these parameters are doing
+# as well as reading https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-workflow.html
+
+default:
+  tag_create: # ?tag_create()
+    # crop_start: NULL # Generally set at the tag level
+    # crop_end: NULL
+  tag_label: # ? tag_label()
+    warning_flight_duration: 2 # hours
+    warning_stap_duration: 6 # hours
+  tag_set_map: # ?tag_set_map()
+    extent: [20, 120, -35, 50] # [W, E, S, N]
+    scale: 2 # 1 (min) -> 1° ; 2 -> 0.5° ; 5 -> 0.25° ; 10 (max) -> 0.1°
+    include_stap_id: NULL # default, take all
+    include_min_duration: 0 # in hours
+  geopressure_map: # ?geopressure_map()
+    max_sample: 300
+    margin: 30 # in m
+    sd: 1
+    thr_mask: 0.9
+    log_linear_pooling_weight: !expr \(n) log(n)/n
+    workers: 8
+  twilight_create: # ?twilight_create()
+    # twl_thr: NULL
+    twl_offset: -5.5 # in hours
+  geolight_map: # ?geolight_map()
+    twl_calib_adjust: 4
+    twl_llp: !expr \(n) 1/2*log(n)/n
+    compute_known: TRUE
+  geomag_calib:
+    calib_data:
+      crop_start: NULL
+      crop_end: NULL
+  geomag_map:
+    compute_known: TRUE
+  graph_create: # ?graph_create()
+    thr_likelihood: 0.95
+    thr_gs: 120 # km/h
+    likelihood: "map_pressure"
+  graph_add_wind:
+    thr_as: 90 # km/h
+    file: !expr \(stap_id, tag_id) glue::glue("/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/2-geolocator_data/MongolianNightjar/data/wind/{tag_id}/{tag_id}_{stap_id}.nc")
+  graph_set_movement: # ?graph_set_movement()
+    type: "gs" # too slow with wind?
+    # method: "gamma"
+    # shape: 7 # only for gamma
+    # scale: 7
+    # location: 40 # only for logistic
+    # low_speed_fix: 15 # km/h
+    # zero_speed_ratio: 1
+  bird_create:
+    scientific_name: "Caprimulgus europaeus"
+  graph_simulation: # ?graph_simulation()
+    nj: 10
+  pressurepath_create: # ?pressurepath_create()
+    variable: ["altitude", "surface_pressure"]
+    # solar_dep: 0
+  geopressuretemplate: # ?geopressuretemplate()
+    likelihood: ["map_pressure", "map_light"]
+    outputs: ["most_likely", "simulation"]
+    pressurepath: ["most_likely"] # "geopressureviz"
+
+
+22BT:
+  tag_set_map:
+    known:
+      stap_id: [1] # -1 -> last stap
+      known_lon: 110.83
+      known_lat: 48.57
+
+22BS:
+  tag_set_map:
+    known:
+      stap_id: [1] # -1 -> last stap
+      known_lon: 110.83
+      known_lat: 48.57
+
+24FD:
+  tag_set_map:
+    known:
+      stap_id: [1, 105] # -1 -> last stap
+      known_lon: 110.83
+      known_lat: 48.57

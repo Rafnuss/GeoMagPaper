@@ -1,0 +1,125 @@
+project:
+  type: website
+website:
+  navbar:
+    left:
+    - text: Upupa epops
+      menu:
+      - text: 12HM
+        href: 12HM.html
+      - text: 14DM
+        href: 14DM.html
+      - text: 14EJ
+        href: 14EJ.html
+      - text: 14EZ
+        href: 14EZ.html
+      - text: 14OD
+        href: 14OD.html
+      - text: 16AJ
+        href: 16AJ.html
+      - text: 16BG
+        href: 16BG.html
+      - text: 16EG
+        href: 16EG.html
+      - text: 16AQ
+        href: 16AQ.html
+      - text: 16DL
+        href: 16DL.html
+      - text: 16DF
+        href: 16DF.html
+      - text: 16EF
+        href: 16EF.html
+      - text: 16DU
+        href: 16DU.html
+      - text: 16DM
+        href: 16DM.html
+      - text: 16AO
+        href: 16AO.html
+      - text: 16BY
+        href: 16BY.html
+      - text: 16BZ
+        href: 16BZ.html
+      - text: 16CD
+        href: 16CD.html
+      - text: 16CA
+        href: 16CA.html
+      - text: 16CP
+        href: 16CP.html
+      - text: 16CC
+        href: 16CC.html
+    - text: Halcyon senegalensis
+      menu:
+      - text: 16LN
+        href: 16LN.html
+      - text: 16LO
+        href: 16LO.html
+      - text: 16LP
+        href: 16LP.html
+      - text: 20IK
+        href: 20IK.html
+      - text: 22NO
+        href: 22NO.html
+    - text: Turdus torquatus
+      menu:
+      - text: 18IS
+        href: 18IS.html
+      - text: 20OE
+        href: 20OE.html
+      - text: 20OA
+        href: 20OA.html
+      - text: 22QQ
+        href: 22QQ.html
+    - text: Caprimulgus europaeus
+      menu:
+      - text: 22BT
+        href: 22BT.html
+      - text: 22BS
+        href: 22BS.html
+      - text: 24FD
+        href: 24FD.html
+    - text: Acrocephalus arundinaceus
+      menu:
+      - text: 14ES
+        href: 14ES.html
+      - text: 14FF
+        href: 14FF.html
+      - text: 14GD
+        href: 14GD.html
+      - text: 14GF
+        href: 14GF.html
+      - text: 14GG
+        href: 14GG.html
+      - text: 14GH
+        href: 14GH.html
+      - text: 14GS
+        href: 14GS.html
+      - text: 14HB
+        href: 14HB.html
+      - text: 14HC
+        href: 14HC.html
+      - text: 14HT
+        href: 14HT.html
+      - text: 14TS
+        href: 14TS.html
+      - text: 14TF
+        href: 14TF.html
+      - text: 14TZ
+        href: 14TZ.html
+      - text: 16BR
+        href: 16BR.html
+      - text: 16ER
+        href: 16ER.html
+      - text: 16ET
+        href: 16ET.html
+      - text: 16FB
+        href: 16FB.html
+      - text: 16FI
+        href: 16FI.html
+      - text: 16FT
+        href: 16FT.html
+      - text: 16GA
+        href: 16GA.html
+      - text: 16HB
+        href: 16HB.html
+      - text: 16HL
+        href: 16HL.html

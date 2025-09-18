@@ -1,0 +1,56 @@
+
+project:
+  type: website
+
+render:
+  - alpine_swift.qmd
+
+profiles:
+  default:
+    execute:
+      enabled: false
+
+website:
+  navbar:
+    left:
+    - text: '18IZ'
+      href: '18IZ.html'
+    - text: '18JB'
+      href: '18JB.html'
+    - text: '18JC'
+      href: '18JC.html'
+    - text: '18JD'
+      href: '18JD.html'
+    - text: '18JE'
+      href: '18JE.html'
+    - text: '18JI'
+      href: '18JI.html'
+    - text: '28WM'
+      href: '28WM.html'
+    - text: '28WM'
+      href: '28WM.html'
+    - text: '28YR'
+      href: '28YR.html'
+    - text: '12GE'
+      href: '12GE.html'
+    - text: '12GS'
+      href: '12GS.html'
+    - text: '12HG'
+      href: '12HG.html'
+    - text: '12HI'
+      href: '12HI.html'
+    - text: '12HU'
+      href: '12HU.html'
+    - text: '12HW'
+      href: '12HW.html'
+    - text: '14CE'
+      href: '14CE.html'
+    - text: '14CF'
+      href: '14CF.html'
+    - text: '14CK'
+      href: '14CK.html'
+    - text: '14CT'
+      href: '14CT.html'
+    - text: '14CU'
+      href: '14CU.html'
+

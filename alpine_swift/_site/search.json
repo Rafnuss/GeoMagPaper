@@ -1,0 +1,338 @@
+[
+  {
+    "objectID": "18IZ.html",
+    "href": "18IZ.html",
+    "title": "Report for 18IZ",
+    "section": "",
+    "text": "Created on: 2025-07-15 12:59:50"
+  },
+  {
+    "objectID": "18IZ.html#setup",
+    "href": "18IZ.html#setup",
+    "title": "Report for 18IZ",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(ggplot2)\nlibrary(plotly)\nlibrary(terra)\nlibrary(tidyverse)\nlibrary(viridisLite)\nlibrary(sf)\nlibrary(rnaturalearth)\nlibrary(patchwork)\n\ninvisible(sapply(\n  list.files(\"/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/GeoMag/R\", pattern = \"\\\\.R$\", full.names = TRUE),\n  function(f) source(f, local = globalenv(), echo = FALSE)\n))\nid &lt;- params$id\n\n\n\n\nCode\ntag &lt;- tag_create(id,  directory = params$directory, quiet=T )\n\n\n\n\nCode\nsubplot(plot(tag, \"pressure\"), plot(tag, \"twilight\", plot_plotly = T), plot(tag, \"actogram\", plot_plotly = T), nrows = 3, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "18IZ.html#read-and-evaluate-magnetic-data",
+    "href": "18IZ.html#read-and-evaluate-magnetic-data",
+    "title": "Report for 18IZ",
+    "section": "Read and evaluate magnetic data",
+    "text": "Read and evaluate magnetic data\n\n\nCode\ntag &lt;- geomag_calib(tag, calib_data=FALSE)"
+  },
+  {
+    "objectID": "18IZ.html#plot-acceleration",
+    "href": "18IZ.html#plot-acceleration",
+    "title": "Report for 18IZ",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = pitch/pi*180)) +\n    geom_line(color = \"grey\") +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Pitch (°)\"),\n  dynamicTicks = TRUE\n)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"calib\")\n\n\n\n\n\n\nCode\nplotly::plot_ly() |&gt;\n      plotly::add_markers(\n        data = tag$mag_calib,\n        x = ~magnetic_x, y = ~magnetic_y, z = ~magnetic_z,\n        marker = list(color = as.numeric(tag$mag_calib$date))\n      )\n\n\n\n\n\n\n\n\nCode\nsubplot(\n  ggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = I/pi*180)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Inclination (°)\"),\n  dynamicTicks = TRUE\n),\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = F)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Intensity\"),\n  dynamicTicks = TRUE\n),\n  nrows = 2, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "18JB.html",
+    "href": "18JB.html",
+    "title": "Report for 18JB",
+    "section": "",
+    "text": "Created on: 2025-07-15 13:00:51"
+  },
+  {
+    "objectID": "18JB.html#setup",
+    "href": "18JB.html#setup",
+    "title": "Report for 18JB",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(ggplot2)\nlibrary(plotly)\nlibrary(terra)\nlibrary(tidyverse)\nlibrary(viridisLite)\nlibrary(sf)\nlibrary(rnaturalearth)\nlibrary(patchwork)\n\ninvisible(sapply(\n  list.files(\"/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/GeoMag/R\", pattern = \"\\\\.R$\", full.names = TRUE),\n  function(f) source(f, local = globalenv(), echo = FALSE)\n))\nid &lt;- params$id\n\n\n\n\nCode\ntag &lt;- tag_create(id,  directory = params$directory, quiet=T )\n\n\n\n\nCode\nsubplot(plot(tag, \"pressure\"), plot(tag, \"twilight\", plot_plotly = T), plot(tag, \"actogram\", plot_plotly = T), nrows = 3, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "18JB.html#read-and-evaluate-magnetic-data",
+    "href": "18JB.html#read-and-evaluate-magnetic-data",
+    "title": "Report for 18JB",
+    "section": "Read and evaluate magnetic data",
+    "text": "Read and evaluate magnetic data\n\n\nCode\ntag &lt;- geomag_calib(tag, calib_data=FALSE)"
+  },
+  {
+    "objectID": "18JB.html#plot-acceleration",
+    "href": "18JB.html#plot-acceleration",
+    "title": "Report for 18JB",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = pitch/pi*180)) +\n    geom_line(color = \"grey\") +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Pitch (°)\"),\n  dynamicTicks = TRUE\n)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"calib\")\n\n\n\n\n\n\nCode\nplotly::plot_ly() |&gt;\n      plotly::add_markers(\n        data = tag$mag_calib,\n        x = ~magnetic_x, y = ~magnetic_y, z = ~magnetic_z,\n        marker = list(color = as.numeric(tag$mag_calib$date))\n      )\n\n\n\n\n\n\n\n\nCode\nsubplot(\n  ggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = I/pi*180)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Inclination (°)\"),\n  dynamicTicks = TRUE\n),\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = F)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Intensity\"),\n  dynamicTicks = TRUE\n),\n  nrows = 2, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "18JC.html",
+    "href": "18JC.html",
+    "title": "Report for 18JC",
+    "section": "",
+    "text": "Created on: 2025-07-15 13:01:50"
+  },
+  {
+    "objectID": "18JC.html#setup",
+    "href": "18JC.html#setup",
+    "title": "Report for 18JC",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(ggplot2)\nlibrary(plotly)\nlibrary(terra)\nlibrary(tidyverse)\nlibrary(viridisLite)\nlibrary(sf)\nlibrary(rnaturalearth)\nlibrary(patchwork)\n\ninvisible(sapply(\n  list.files(\"/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/GeoMag/R\", pattern = \"\\\\.R$\", full.names = TRUE),\n  function(f) source(f, local = globalenv(), echo = FALSE)\n))\nid &lt;- params$id\n\n\n\n\nCode\ntag &lt;- tag_create(id,  directory = params$directory, quiet=T )\n\n\n\n\nCode\nsubplot(plot(tag, \"pressure\"), plot(tag, \"twilight\", plot_plotly = T), plot(tag, \"actogram\", plot_plotly = T), nrows = 3, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "18JC.html#read-and-evaluate-magnetic-data",
+    "href": "18JC.html#read-and-evaluate-magnetic-data",
+    "title": "Report for 18JC",
+    "section": "Read and evaluate magnetic data",
+    "text": "Read and evaluate magnetic data\n\n\nCode\ntag &lt;- geomag_calib(tag, calib_data=FALSE)"
+  },
+  {
+    "objectID": "18JC.html#plot-acceleration",
+    "href": "18JC.html#plot-acceleration",
+    "title": "Report for 18JC",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = pitch/pi*180)) +\n    geom_line(color = \"grey\") +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Pitch (°)\"),\n  dynamicTicks = TRUE\n)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"calib\")\n\n\n\n\n\n\nCode\nplotly::plot_ly() |&gt;\n      plotly::add_markers(\n        data = tag$mag_calib,\n        x = ~magnetic_x, y = ~magnetic_y, z = ~magnetic_z,\n        marker = list(color = as.numeric(tag$mag_calib$date))\n      )\n\n\n\n\n\n\n\n\nCode\nsubplot(\n  ggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = I/pi*180)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Inclination (°)\"),\n  dynamicTicks = TRUE\n),\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = F)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Intensity\"),\n  dynamicTicks = TRUE\n),\n  nrows = 2, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "18JE.html",
+    "href": "18JE.html",
+    "title": "Report for 18JE",
+    "section": "",
+    "text": "Created on: 2025-07-15 13:08:01"
+  },
+  {
+    "objectID": "18JE.html#setup",
+    "href": "18JE.html#setup",
+    "title": "Report for 18JE",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(ggplot2)\nlibrary(plotly)\nlibrary(terra)\nlibrary(tidyverse)\nlibrary(viridisLite)\nlibrary(sf)\nlibrary(rnaturalearth)\nlibrary(patchwork)\n\ninvisible(sapply(\n  list.files(\"/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/GeoMag/R\", pattern = \"\\\\.R$\", full.names = TRUE),\n  function(f) source(f, local = globalenv(), echo = FALSE)\n))\nid &lt;- params$id\n\n\n\n\nCode\ntag &lt;- tag_create(id,  directory = params$directory, quiet=T )\n\n\n\n\nCode\nsubplot(plot(tag, \"pressure\"), plot(tag, \"twilight\", plot_plotly = T), plot(tag, \"actogram\", plot_plotly = T), nrows = 3, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "18JE.html#read-and-evaluate-magnetic-data",
+    "href": "18JE.html#read-and-evaluate-magnetic-data",
+    "title": "Report for 18JE",
+    "section": "Read and evaluate magnetic data",
+    "text": "Read and evaluate magnetic data\n\n\nCode\ntag &lt;- geomag_calib(tag, calib_data=FALSE)"
+  },
+  {
+    "objectID": "18JE.html#plot-acceleration",
+    "href": "18JE.html#plot-acceleration",
+    "title": "Report for 18JE",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = pitch/pi*180)) +\n    geom_line(color = \"grey\") +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Pitch (°)\"),\n  dynamicTicks = TRUE\n)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"calib\")\n\n\n\n\n\n\nCode\nplotly::plot_ly() |&gt;\n      plotly::add_markers(\n        data = tag$mag_calib,\n        x = ~magnetic_x, y = ~magnetic_y, z = ~magnetic_z,\n        marker = list(color = as.numeric(tag$mag_calib$date))\n      )\n\n\n\n\n\n\n\n\nCode\nsubplot(\n  ggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = I/pi*180)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Inclination (°)\"),\n  dynamicTicks = TRUE\n),\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = F)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Intensity\"),\n  dynamicTicks = TRUE\n),\n  nrows = 2, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "18JI.html",
+    "href": "18JI.html",
+    "title": "Report for 18JI",
+    "section": "",
+    "text": "Created on: 2025-07-15 13:09:04"
+  },
+  {
+    "objectID": "18JI.html#setup",
+    "href": "18JI.html#setup",
+    "title": "Report for 18JI",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(ggplot2)\nlibrary(plotly)\nlibrary(terra)\nlibrary(tidyverse)\nlibrary(viridisLite)\nlibrary(sf)\nlibrary(rnaturalearth)\nlibrary(patchwork)\n\ninvisible(sapply(\n  list.files(\"/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/GeoMag/R\", pattern = \"\\\\.R$\", full.names = TRUE),\n  function(f) source(f, local = globalenv(), echo = FALSE)\n))\nid &lt;- params$id\n\n\n\n\nCode\ntag &lt;- tag_create(id,  directory = params$directory, quiet=T )\n\n\n\n\nCode\nsubplot(plot(tag, \"pressure\"), plot(tag, \"twilight\", plot_plotly = T), plot(tag, \"actogram\", plot_plotly = T), nrows = 3, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "18JI.html#read-and-evaluate-magnetic-data",
+    "href": "18JI.html#read-and-evaluate-magnetic-data",
+    "title": "Report for 18JI",
+    "section": "Read and evaluate magnetic data",
+    "text": "Read and evaluate magnetic data\n\n\nCode\ntag &lt;- geomag_calib(tag, calib_data=FALSE)"
+  },
+  {
+    "objectID": "18JI.html#plot-acceleration",
+    "href": "18JI.html#plot-acceleration",
+    "title": "Report for 18JI",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = pitch/pi*180)) +\n    geom_line(color = \"grey\") +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Pitch (°)\"),\n  dynamicTicks = TRUE\n)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"calib\")\n\n\n\n\n\n\nCode\nplotly::plot_ly() |&gt;\n      plotly::add_markers(\n        data = tag$mag_calib,\n        x = ~magnetic_x, y = ~magnetic_y, z = ~magnetic_z,\n        marker = list(color = as.numeric(tag$mag_calib$date))\n      )\n\n\n\n\n\n\n\n\nCode\nsubplot(\n  ggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = I/pi*180)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Inclination (°)\"),\n  dynamicTicks = TRUE\n),\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = F)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Intensity\"),\n  dynamicTicks = TRUE\n),\n  nrows = 2, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "12GE.html",
+    "href": "12GE.html",
+    "title": "Report for 12GE",
+    "section": "",
+    "text": "Created on: 2025-07-15 13:29:09"
+  },
+  {
+    "objectID": "12GE.html#setup",
+    "href": "12GE.html#setup",
+    "title": "Report for 12GE",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(ggplot2)\nlibrary(plotly)\nlibrary(terra)\nlibrary(tidyverse)\nlibrary(viridisLite)\nlibrary(sf)\nlibrary(rnaturalearth)\nlibrary(patchwork)\n\ninvisible(sapply(\n  list.files(\"/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/GeoMag/R\", pattern = \"\\\\.R$\", full.names = TRUE),\n  function(f) source(f, local = globalenv(), echo = FALSE)\n))\nid &lt;- params$id\n\n\n\n\nCode\ntag &lt;- tag_create(id,  directory = params$directory, quiet=T )\n\n\n\n\nCode\nsubplot(plot(tag, \"pressure\"), plot(tag, \"twilight\", plot_plotly = T), plot(tag, \"actogram\", plot_plotly = T), nrows = 3, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "12GE.html#read-and-evaluate-magnetic-data",
+    "href": "12GE.html#read-and-evaluate-magnetic-data",
+    "title": "Report for 12GE",
+    "section": "Read and evaluate magnetic data",
+    "text": "Read and evaluate magnetic data\n\n\nCode\ntag &lt;- geomag_calib(tag, calib_data=FALSE)"
+  },
+  {
+    "objectID": "12GE.html#plot-acceleration",
+    "href": "12GE.html#plot-acceleration",
+    "title": "Report for 12GE",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = pitch/pi*180)) +\n    geom_line(color = \"grey\") +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Pitch (°)\"),\n  dynamicTicks = TRUE\n)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"calib\")\n\n\n\n\n\n\nCode\nplotly::plot_ly() |&gt;\n      plotly::add_markers(\n        data = tag$mag_calib,\n        x = ~magnetic_x, y = ~magnetic_y, z = ~magnetic_z,\n        marker = list(color = as.numeric(tag$mag_calib$date))\n      )\n\n\n\n\n\n\n\n\nCode\nsubplot(\n  ggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = I/pi*180)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Inclination (°)\"),\n  dynamicTicks = TRUE\n),\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = F)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Intensity\"),\n  dynamicTicks = TRUE\n),\n  nrows = 2, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "12GS.html",
+    "href": "12GS.html",
+    "title": "Report for 12GS",
+    "section": "",
+    "text": "Created on: 2025-07-15 13:29:48"
+  },
+  {
+    "objectID": "12GS.html#setup",
+    "href": "12GS.html#setup",
+    "title": "Report for 12GS",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(ggplot2)\nlibrary(plotly)\nlibrary(terra)\nlibrary(tidyverse)\nlibrary(viridisLite)\nlibrary(sf)\nlibrary(rnaturalearth)\nlibrary(patchwork)\n\ninvisible(sapply(\n  list.files(\"/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/GeoMag/R\", pattern = \"\\\\.R$\", full.names = TRUE),\n  function(f) source(f, local = globalenv(), echo = FALSE)\n))\nid &lt;- params$id\n\n\n\n\nCode\ntag &lt;- tag_create(id,  directory = params$directory, quiet=T )\n\n\n\n\nCode\nsubplot(plot(tag, \"pressure\"), plot(tag, \"twilight\", plot_plotly = T), plot(tag, \"actogram\", plot_plotly = T), nrows = 3, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "12GS.html#read-and-evaluate-magnetic-data",
+    "href": "12GS.html#read-and-evaluate-magnetic-data",
+    "title": "Report for 12GS",
+    "section": "Read and evaluate magnetic data",
+    "text": "Read and evaluate magnetic data\n\n\nCode\ntag &lt;- geomag_calib(tag, calib_data=FALSE)"
+  },
+  {
+    "objectID": "12GS.html#plot-acceleration",
+    "href": "12GS.html#plot-acceleration",
+    "title": "Report for 12GS",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = pitch/pi*180)) +\n    geom_line(color = \"grey\") +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Pitch (°)\"),\n  dynamicTicks = TRUE\n)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"calib\")\n\n\n\n\n\n\nCode\nplotly::plot_ly() |&gt;\n      plotly::add_markers(\n        data = tag$mag_calib,\n        x = ~magnetic_x, y = ~magnetic_y, z = ~magnetic_z,\n        marker = list(color = as.numeric(tag$mag_calib$date))\n      )\n\n\n\n\n\n\n\n\nCode\nsubplot(\n  ggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = I/pi*180)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Inclination (°)\"),\n  dynamicTicks = TRUE\n),\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = F)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Intensity\"),\n  dynamicTicks = TRUE\n),\n  nrows = 2, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "12HI.html",
+    "href": "12HI.html",
+    "title": "Report for 12HI",
+    "section": "",
+    "text": "Created on: 2025-07-15 13:30:50"
+  },
+  {
+    "objectID": "12HI.html#setup",
+    "href": "12HI.html#setup",
+    "title": "Report for 12HI",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(ggplot2)\nlibrary(plotly)\nlibrary(terra)\nlibrary(tidyverse)\nlibrary(viridisLite)\nlibrary(sf)\nlibrary(rnaturalearth)\nlibrary(patchwork)\n\ninvisible(sapply(\n  list.files(\"/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/GeoMag/R\", pattern = \"\\\\.R$\", full.names = TRUE),\n  function(f) source(f, local = globalenv(), echo = FALSE)\n))\nid &lt;- params$id\n\n\n\n\nCode\ntag &lt;- tag_create(id,  directory = params$directory, quiet=T )\n\n\n\n\nCode\nsubplot(plot(tag, \"pressure\"), plot(tag, \"twilight\", plot_plotly = T), plot(tag, \"actogram\", plot_plotly = T), nrows = 3, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "12HI.html#read-and-evaluate-magnetic-data",
+    "href": "12HI.html#read-and-evaluate-magnetic-data",
+    "title": "Report for 12HI",
+    "section": "Read and evaluate magnetic data",
+    "text": "Read and evaluate magnetic data\n\n\nCode\ntag &lt;- geomag_calib(tag, calib_data=FALSE)"
+  },
+  {
+    "objectID": "12HI.html#plot-acceleration",
+    "href": "12HI.html#plot-acceleration",
+    "title": "Report for 12HI",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = pitch/pi*180)) +\n    geom_line(color = \"grey\") +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Pitch (°)\"),\n  dynamicTicks = TRUE\n)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"calib\")\n\n\n\n\n\n\nCode\nplotly::plot_ly() |&gt;\n      plotly::add_markers(\n        data = tag$mag_calib,\n        x = ~magnetic_x, y = ~magnetic_y, z = ~magnetic_z,\n        marker = list(color = as.numeric(tag$mag_calib$date))\n      )\n\n\n\n\n\n\n\n\nCode\nsubplot(\n  ggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = I/pi*180)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Inclination (°)\"),\n  dynamicTicks = TRUE\n),\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = F)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Intensity\"),\n  dynamicTicks = TRUE\n),\n  nrows = 2, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "12HU.html",
+    "href": "12HU.html",
+    "title": "Report for 12HU",
+    "section": "",
+    "text": "Created on: 2025-07-15 13:31:41"
+  },
+  {
+    "objectID": "12HU.html#setup",
+    "href": "12HU.html#setup",
+    "title": "Report for 12HU",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(ggplot2)\nlibrary(plotly)\nlibrary(terra)\nlibrary(tidyverse)\nlibrary(viridisLite)\nlibrary(sf)\nlibrary(rnaturalearth)\nlibrary(patchwork)\n\ninvisible(sapply(\n  list.files(\"/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/GeoMag/R\", pattern = \"\\\\.R$\", full.names = TRUE),\n  function(f) source(f, local = globalenv(), echo = FALSE)\n))\nid &lt;- params$id\n\n\n\n\nCode\ntag &lt;- tag_create(id,  directory = params$directory, quiet=T )\n\n\n\n\nCode\nsubplot(plot(tag, \"pressure\"), plot(tag, \"twilight\", plot_plotly = T), plot(tag, \"actogram\", plot_plotly = T), nrows = 3, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "12HU.html#read-and-evaluate-magnetic-data",
+    "href": "12HU.html#read-and-evaluate-magnetic-data",
+    "title": "Report for 12HU",
+    "section": "Read and evaluate magnetic data",
+    "text": "Read and evaluate magnetic data\n\n\nCode\ntag &lt;- geomag_calib(tag, calib_data=FALSE)"
+  },
+  {
+    "objectID": "12HU.html#plot-acceleration",
+    "href": "12HU.html#plot-acceleration",
+    "title": "Report for 12HU",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = pitch/pi*180)) +\n    geom_line(color = \"grey\") +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Pitch (°)\"),\n  dynamicTicks = TRUE\n)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"calib\")\n\n\n\n\n\n\nCode\nplotly::plot_ly() |&gt;\n      plotly::add_markers(\n        data = tag$mag_calib,\n        x = ~magnetic_x, y = ~magnetic_y, z = ~magnetic_z,\n        marker = list(color = as.numeric(tag$mag_calib$date))\n      )\n\n\n\n\n\n\n\n\nCode\nsubplot(\n  ggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = I/pi*180)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Inclination (°)\"),\n  dynamicTicks = TRUE\n),\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = F)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Intensity\"),\n  dynamicTicks = TRUE\n),\n  nrows = 2, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "14CE.html",
+    "href": "14CE.html",
+    "title": "Report for 14CE",
+    "section": "",
+    "text": "Created on: 2025-07-15 13:32:48"
+  },
+  {
+    "objectID": "14CE.html#setup",
+    "href": "14CE.html#setup",
+    "title": "Report for 14CE",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(ggplot2)\nlibrary(plotly)\nlibrary(terra)\nlibrary(tidyverse)\nlibrary(viridisLite)\nlibrary(sf)\nlibrary(rnaturalearth)\nlibrary(patchwork)\n\ninvisible(sapply(\n  list.files(\"/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/GeoMag/R\", pattern = \"\\\\.R$\", full.names = TRUE),\n  function(f) source(f, local = globalenv(), echo = FALSE)\n))\nid &lt;- params$id\n\n\n\n\nCode\ntag &lt;- tag_create(id,  directory = params$directory, quiet=T )\n\n\n\n\nCode\nsubplot(plot(tag, \"pressure\"), plot(tag, \"twilight\", plot_plotly = T), plot(tag, \"actogram\", plot_plotly = T), nrows = 3, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "14CE.html#read-and-evaluate-magnetic-data",
+    "href": "14CE.html#read-and-evaluate-magnetic-data",
+    "title": "Report for 14CE",
+    "section": "Read and evaluate magnetic data",
+    "text": "Read and evaluate magnetic data\n\n\nCode\ntag &lt;- geomag_calib(tag, calib_data=FALSE)"
+  },
+  {
+    "objectID": "14CE.html#plot-acceleration",
+    "href": "14CE.html#plot-acceleration",
+    "title": "Report for 14CE",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = pitch/pi*180)) +\n    geom_line(color = \"grey\") +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Pitch (°)\"),\n  dynamicTicks = TRUE\n)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"calib\")\n\n\n\n\n\n\nCode\nplotly::plot_ly() |&gt;\n      plotly::add_markers(\n        data = tag$mag_calib,\n        x = ~magnetic_x, y = ~magnetic_y, z = ~magnetic_z,\n        marker = list(color = as.numeric(tag$mag_calib$date))\n      )\n\n\n\n\n\n\n\n\nCode\nsubplot(\n  ggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = I/pi*180)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Inclination (°)\"),\n  dynamicTicks = TRUE\n),\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = F)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Intensity\"),\n  dynamicTicks = TRUE\n),\n  nrows = 2, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "14CF.html",
+    "href": "14CF.html",
+    "title": "Report for 14CF",
+    "section": "",
+    "text": "Created on: 2025-07-15 13:33:28"
+  },
+  {
+    "objectID": "14CF.html#setup",
+    "href": "14CF.html#setup",
+    "title": "Report for 14CF",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(ggplot2)\nlibrary(plotly)\nlibrary(terra)\nlibrary(tidyverse)\nlibrary(viridisLite)\nlibrary(sf)\nlibrary(rnaturalearth)\nlibrary(patchwork)\n\ninvisible(sapply(\n  list.files(\"/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/GeoMag/R\", pattern = \"\\\\.R$\", full.names = TRUE),\n  function(f) source(f, local = globalenv(), echo = FALSE)\n))\nid &lt;- params$id\n\n\n\n\nCode\ntag &lt;- tag_create(id,  directory = params$directory, quiet=T )\n\n\n\n\nCode\nsubplot(plot(tag, \"pressure\"), plot(tag, \"twilight\", plot_plotly = T), plot(tag, \"actogram\", plot_plotly = T), nrows = 3, shareX = TRUE, titleY = TRUE)\n\n\nWarning: ✖ Temporal resolution of the ts data is not constant. We will use a regular\n  resolution of 300 seconds.\n✖ Temporal resolution of the ts data is not constant. We will use a regular\n  resolution of 300 seconds."
+  },
+  {
+    "objectID": "14CF.html#read-and-evaluate-magnetic-data",
+    "href": "14CF.html#read-and-evaluate-magnetic-data",
+    "title": "Report for 14CF",
+    "section": "Read and evaluate magnetic data",
+    "text": "Read and evaluate magnetic data\n\n\nCode\ntag &lt;- geomag_calib(tag, calib_data=FALSE)"
+  },
+  {
+    "objectID": "14CF.html#plot-acceleration",
+    "href": "14CF.html#plot-acceleration",
+    "title": "Report for 14CF",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = pitch/pi*180)) +\n    geom_line(color = \"grey\") +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Pitch (°)\"),\n  dynamicTicks = TRUE\n)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"calib\")\n\n\n\n\n\n\nCode\nplotly::plot_ly() |&gt;\n      plotly::add_markers(\n        data = tag$mag_calib,\n        x = ~magnetic_x, y = ~magnetic_y, z = ~magnetic_z,\n        marker = list(color = as.numeric(tag$mag_calib$date))\n      )\n\n\n\n\n\n\n\n\nCode\nsubplot(\n  ggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = I/pi*180)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Inclination (°)\"),\n  dynamicTicks = TRUE\n),\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = F)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Intensity\"),\n  dynamicTicks = TRUE\n),\n  nrows = 2, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "14CK.html",
+    "href": "14CK.html",
+    "title": "Report for 14CK",
+    "section": "",
+    "text": "Created on: 2025-07-15 13:34:14"
+  },
+  {
+    "objectID": "14CK.html#setup",
+    "href": "14CK.html#setup",
+    "title": "Report for 14CK",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(ggplot2)\nlibrary(plotly)\nlibrary(terra)\nlibrary(tidyverse)\nlibrary(viridisLite)\nlibrary(sf)\nlibrary(rnaturalearth)\nlibrary(patchwork)\n\ninvisible(sapply(\n  list.files(\"/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/GeoMag/R\", pattern = \"\\\\.R$\", full.names = TRUE),\n  function(f) source(f, local = globalenv(), echo = FALSE)\n))\nid &lt;- params$id\n\n\n\n\nCode\ntag &lt;- tag_create(id,  directory = params$directory, quiet=T )\n\n\n\n\nCode\nsubplot(plot(tag, \"pressure\"), plot(tag, \"twilight\", plot_plotly = T), plot(tag, \"actogram\", plot_plotly = T), nrows = 3, shareX = TRUE, titleY = TRUE)"
+  },
+  {
+    "objectID": "14CK.html#read-and-evaluate-magnetic-data",
+    "href": "14CK.html#read-and-evaluate-magnetic-data",
+    "title": "Report for 14CK",
+    "section": "Read and evaluate magnetic data",
+    "text": "Read and evaluate magnetic data\n\n\nCode\ntag &lt;- geomag_calib(tag, calib_data=FALSE)"
+  },
+  {
+    "objectID": "14CK.html#plot-acceleration",
+    "href": "14CK.html#plot-acceleration",
+    "title": "Report for 14CK",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = pitch/pi*180)) +\n    geom_line(color = \"grey\") +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Pitch (°)\"),\n  dynamicTicks = TRUE\n)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"calib\")\n\n\n\n\n\n\nCode\nplotly::plot_ly() |&gt;\n      plotly::add_markers(\n        data = tag$mag_calib,\n        x = ~magnetic_x, y = ~magnetic_y, z = ~magnetic_z,\n        marker = list(color = as.numeric(tag$mag_calib$date))\n      )\n\n\n\n\n\n\n\n\nCode\nsubplot(\n  ggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = I/pi*180)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Inclination (°)\"),\n  dynamicTicks = TRUE\n),\nggplotly(\n  tag$magnetic %&gt;%\n    ggplot(aes(x = date, y = F)) +\n    geom_point(aes(color=is_static)) +\n    theme_bw() +\n    scale_y_continuous(name = \"Intensity\"),\n  dynamicTicks = TRUE\n),\n  nrows = 2, shareX = TRUE, titleY = TRUE)"
+  }
+]

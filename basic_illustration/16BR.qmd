@@ -1,0 +1,82 @@
+---
+title: "`r glue::glue('Acrocephalus arundinaceus (16BR)')`"
+format: html
+editor: visual 
+code-fold: true
+params:
+  id: "16BR"
+  sp: "Acrocephalus arundinaceus"
+---
+
+**Created on:** `r format(Sys.time(), "%Y-%m-%d %H:%M:%S")`
+
+## Setup
+
+```{r, setup, message=FALSE}
+library(GeoPressureR)
+library(GeoMag)
+library(ggplot2)
+library(tidyverse)
+
+id <- params$id
+
+load(here::here(glue::glue("data/interim/{id}.RData")))
+path <- read_csv(here::here("data/dist2ref.csv"), show_col_types = FALSE) %>% 
+  filter(tag_id==id & j==0)
+```
+
+## Plot acceleration
+
+```{r, warning=FALSE}
+df_magnetic <- tag$magnetic %>%
+  filter(is_static < 1) %>%
+  pivot_longer(acceleration_x:acceleration_z, names_to = "Component", values_to = "Value")
+
+ggplot(df_magnetic, aes(x = Value)) +
+  geom_histogram(bins = 30, fill = "steelblue", color = "black", alpha = 0.7) +
+  facet_wrap(~Component, scales = "fixed") + # Fixed scales for uniform axes
+  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +
+  theme_minimal()
+```
+
+```{r}
+plot_mag(tag,"acceleration")
+```
+
+```{r}
+tag$magnetic %>%
+  filter(is_static < 4) %>%
+  transmute(
+    pitch = pitch / pi * 180,
+    roll = roll / pi * 180
+  ) %>%
+  pivot_longer(cols = c(pitch, roll), names_to = "variable", values_to = "value") %>%
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 30, fill = "gray", color = "black") +
+  facet_wrap(~variable, scales = "free_x") +
+  labs(x = "Angle (degrees)", y = "Count") +
+  theme_minimal()
+```
+
+## Plot Magnetic
+
+```{r}
+plot_mag(tag, type="calib")
+```
+
+## Plot Map
+
+```{r}
+plot(tag, "map_magnetic_intensity", path = path)
+plot(tag, "map_magnetic_inclination", path = path)
+```
+
+## Error to known
+
+```{r}
+plot_mag(tag, type="timeseries", path = path)
+```
+
+```{r}
+plot_mag(tag, type="histogram", path = path)
+```

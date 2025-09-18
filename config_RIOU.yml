@@ -1,0 +1,149 @@
+# Configuration file for GeoPressureR parameters
+#
+# This file stores all the parameters used by the GeoPressureR functions, following the best
+# practice to separate parameters from codes. These parameters are retrieved using config::get() of
+# the config R package <https://rstudio.github.io/config/>.
+#
+# This file is meant to be adapted based on your needs: feel free to add parameters either in the
+# default (applied to all tags) or for each tag seperatly (overwrite default). It is recommended to
+# specify all parameters used, even if you use the default value.
+#
+# You can check the documentation of each function to learn what each of these parameters are doing
+# as well as reading https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-workflow.html
+
+default:
+  tag_create: # ?tag_create()
+    # crop_start: NULL # Generally set at the tag level
+    # crop_end: NULL
+  tag_set_map: # ?tag_set_map()
+    extent: [-16, 23, 25, 50] # [W, E, S, N]
+    scale: 5 # 1 (min) -> 1° ; 2 -> 0.5° ; 5 -> 0.25° ; 10 (max) -> 0.1°
+    include_stap_id: NULL # default, take all
+    include_min_duration: 0 # in hours
+  geopressure_map: # ?geopressure_map()
+    max_sample: 250
+    margin: 20 # in m
+    sd: 1
+    thr_mask: 0.9
+    log_linear_pooling_weight: !expr \(n) log(n)/n
+  twilight_create: # ?twilight_create()
+    # twl_thr: NULL
+    # twl_offset: NULL # in hours
+  geolight_map: # ?geolight_map()
+    twl_calib_adjust: 1.4
+    twl_llp: !expr \(n) log(n)/n
+    compute_known: TRUE
+  geomag_calib:
+    calib_data:
+      crop_start: NULL
+      crop_end: NULL
+  geomag_map:
+    compute_known: TRUE
+  graph_create: # ?graph_create()
+    thr_likelihood: 0.99
+    thr_gs: 150 # km/h
+    likelihood: "map_pressure"
+  bird_create:
+    scientific_name: "Turdus torquatus"
+  graph_add_wind:
+    thr_as: 90 # km/h
+    file: !expr \(stap_id, tag_id) glue::glue("/Users/rafnuss/Library/CloudStorage/OneDrive-Vogelwarte/2-geolocator_data/migration-route-of-swiss-ring-ouzels/data/wind/{tag_id}/{tag_id}_{stap_id}.nc")
+  graph_set_movement: # ?graph_set_movement()
+    type: "as"
+    # method: "gamma"
+    # shape: 7 # only for gamma
+    # scale: 7
+    # location: 40 # only for logistic
+    low_speed_fix: 30 # km/h
+    zero_speed_ratio: 3
+  graph_simulation: # ?graph_simulation()
+    nj: 10
+  pressurepath_create: # ?pressurepath_create()
+    variable: ["altitude", "surface_pressure"]
+    # solar_dep: 0
+  geopressuretemplate: # ?geopressuretemplate()
+    likelihood: ["map_pressure", "map_light"] #  for nothing
+    outputs: ["marginal", "most_likely", "simulation"]
+    pressurepath: ["most_likely"] # "geopressureviz
+
+# Issue with calibration
+# 16LF:
+#   ring_number: H53366
+#   sex: F
+#   tag_create:
+#     crop_start: '2017-04-21'
+#     crop_end: '2019-04-30'
+#   tag_set_map:
+#     known:
+#       stap_id: [1, -1]
+#       datetime: "2017-04-20"
+#       known_lon: 7.4288
+#       known_lat: 46.3306
+#       location_name: "Serin"
+#       life_stage: "6"
+#   geomag_calib:
+#     calib_data:
+#       crop_start: '2017-09-12'
+#       crop_end: '2018-5-12'
+
+18IS:
+  ring_number: H135963
+  sex: M
+  tag_create:
+    crop_start: '2017-05-16'
+    crop_end: '2018-05-16'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      datetime: ["2017-05-15", "2018-05-15"]
+      known_lon: [7.4245, 7.4228]
+      known_lat: [46.328, 46.3246]
+      location_name: ["Prorion", "le Tsijiri"]
+      life_stage: ["5", "6"]
+
+20OE:
+  ring_number: H144014
+  sex: M
+  tag_create:
+    crop_start: '2018-04-26'
+    crop_end: '2019-05-07'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      datetime: ["2018-04-25", "2019-05-07"]
+      known_lon: [7.4364, 7.4259]
+      known_lat: [46.3233, 46.3233]
+      location_name: ["Pracombéra", "Sous-Tsijiri"]
+      life_stage: ["6", "6"]
+  geomag_calib:
+    calib_data:
+      crop_start: '2018-09-26'
+      crop_end: NULL
+20OA:
+  ring_number: H135943
+  sex: M
+  tag_create:
+    crop_start: '2018-04-28'
+    crop_end: '2019-05-15'
+  tag_set_map:
+    known:
+      stap_id: [1, -1]
+      datetime: ["2018-04-27", "2019-05-15"]
+      known_lon: [7.4364, 7.4228]
+      known_lat: [46.3233, 46.3246]
+      location_name: ["Pracombéra", "le Tsijiri"]
+
+22QQ:
+  ring_number: H144011
+  sex: M
+  tag_create:
+    crop_start: '2019-05-03'
+    crop_end: '2020-04-16'
+  tag_set_map:
+    known:
+      stap_id: 1
+      datetime: "2019-05-02"
+      known_lon: 7.4288
+      known_lat: 46.3306
+      location_name: "Serin"
+
