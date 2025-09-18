@@ -1,0 +1,2354 @@
+[
+  {
+    "objectID": "16BY.html",
+    "href": "16BY.html",
+    "title": "Upupa epops (16BY)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:16:10"
+  },
+  {
+    "objectID": "16BY.html#setup",
+    "href": "16BY.html#setup",
+    "title": "Upupa epops (16BY)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16BY.html#plot-acceleration",
+    "href": "16BY.html#plot-acceleration",
+    "title": "Upupa epops (16BY)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16BY.html#plot-magnetic",
+    "href": "16BY.html#plot-magnetic",
+    "title": "Upupa epops (16BY)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16BY.html#plot-map",
+    "href": "16BY.html#plot-map",
+    "title": "Upupa epops (16BY)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16BY.html#error-to-known",
+    "href": "16BY.html#error-to-known",
+    "title": "Upupa epops (16BY)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16BZ.html",
+    "href": "16BZ.html",
+    "title": "Upupa epops (16BZ)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:15:38"
+  },
+  {
+    "objectID": "16BZ.html#setup",
+    "href": "16BZ.html#setup",
+    "title": "Upupa epops (16BZ)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16BZ.html#plot-acceleration",
+    "href": "16BZ.html#plot-acceleration",
+    "title": "Upupa epops (16BZ)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16BZ.html#plot-magnetic",
+    "href": "16BZ.html#plot-magnetic",
+    "title": "Upupa epops (16BZ)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16BZ.html#plot-map",
+    "href": "16BZ.html#plot-map",
+    "title": "Upupa epops (16BZ)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16BZ.html#error-to-known",
+    "href": "16BZ.html#error-to-known",
+    "title": "Upupa epops (16BZ)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16LP.html",
+    "href": "16LP.html",
+    "title": "Halcyon senegalensis (16LP)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:15:04"
+  },
+  {
+    "objectID": "16LP.html#setup",
+    "href": "16LP.html#setup",
+    "title": "Halcyon senegalensis (16LP)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16LP.html#plot-acceleration",
+    "href": "16LP.html#plot-acceleration",
+    "title": "Halcyon senegalensis (16LP)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16LP.html#plot-magnetic",
+    "href": "16LP.html#plot-magnetic",
+    "title": "Halcyon senegalensis (16LP)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16LP.html#plot-map",
+    "href": "16LP.html#plot-map",
+    "title": "Halcyon senegalensis (16LP)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16LP.html#error-to-known",
+    "href": "16LP.html#error-to-known",
+    "title": "Halcyon senegalensis (16LP)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14TS.html",
+    "href": "14TS.html",
+    "title": "Acrocephalus arundinaceus (14TS)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:14:19"
+  },
+  {
+    "objectID": "14TS.html#setup",
+    "href": "14TS.html#setup",
+    "title": "Acrocephalus arundinaceus (14TS)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14TS.html#plot-acceleration",
+    "href": "14TS.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (14TS)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14TS.html#plot-magnetic",
+    "href": "14TS.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (14TS)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14TS.html#plot-map",
+    "href": "14TS.html#plot-map",
+    "title": "Acrocephalus arundinaceus (14TS)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14TS.html#error-to-known",
+    "href": "14TS.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (14TS)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16DM.html",
+    "href": "16DM.html",
+    "title": "Upupa epops (16DM)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:13:47"
+  },
+  {
+    "objectID": "16DM.html#setup",
+    "href": "16DM.html#setup",
+    "title": "Upupa epops (16DM)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16DM.html#plot-acceleration",
+    "href": "16DM.html#plot-acceleration",
+    "title": "Upupa epops (16DM)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16DM.html#plot-magnetic",
+    "href": "16DM.html#plot-magnetic",
+    "title": "Upupa epops (16DM)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16DM.html#plot-map",
+    "href": "16DM.html#plot-map",
+    "title": "Upupa epops (16DM)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16DM.html#error-to-known",
+    "href": "16DM.html#error-to-known",
+    "title": "Upupa epops (16DM)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "20OA.html",
+    "href": "20OA.html",
+    "title": "Turdus torquatus (20OA)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:12:51"
+  },
+  {
+    "objectID": "20OA.html#setup",
+    "href": "20OA.html#setup",
+    "title": "Turdus torquatus (20OA)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "20OA.html#plot-acceleration",
+    "href": "20OA.html#plot-acceleration",
+    "title": "Turdus torquatus (20OA)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "20OA.html#plot-magnetic",
+    "href": "20OA.html#plot-magnetic",
+    "title": "Turdus torquatus (20OA)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "20OA.html#plot-map",
+    "href": "20OA.html#plot-map",
+    "title": "Turdus torquatus (20OA)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "20OA.html#error-to-known",
+    "href": "20OA.html#error-to-known",
+    "title": "Turdus torquatus (20OA)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14FF.html",
+    "href": "14FF.html",
+    "title": "Acrocephalus arundinaceus (14FF)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:12:03"
+  },
+  {
+    "objectID": "14FF.html#setup",
+    "href": "14FF.html#setup",
+    "title": "Acrocephalus arundinaceus (14FF)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14FF.html#plot-acceleration",
+    "href": "14FF.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (14FF)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14FF.html#plot-magnetic",
+    "href": "14FF.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (14FF)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14FF.html#plot-map",
+    "href": "14FF.html#plot-map",
+    "title": "Acrocephalus arundinaceus (14FF)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14FF.html#error-to-known",
+    "href": "14FF.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (14FF)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "18IS.html",
+    "href": "18IS.html",
+    "title": "Turdus torquatus (18IS)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:11:32"
+  },
+  {
+    "objectID": "18IS.html#setup",
+    "href": "18IS.html#setup",
+    "title": "Turdus torquatus (18IS)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "18IS.html#plot-acceleration",
+    "href": "18IS.html#plot-acceleration",
+    "title": "Turdus torquatus (18IS)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "18IS.html#plot-magnetic",
+    "href": "18IS.html#plot-magnetic",
+    "title": "Turdus torquatus (18IS)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "18IS.html#plot-map",
+    "href": "18IS.html#plot-map",
+    "title": "Turdus torquatus (18IS)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "18IS.html#error-to-known",
+    "href": "18IS.html#error-to-known",
+    "title": "Turdus torquatus (18IS)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14DM.html",
+    "href": "14DM.html",
+    "title": "Upupa epops (14DM)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:10:56"
+  },
+  {
+    "objectID": "14DM.html#setup",
+    "href": "14DM.html#setup",
+    "title": "Upupa epops (14DM)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14DM.html#plot-acceleration",
+    "href": "14DM.html#plot-acceleration",
+    "title": "Upupa epops (14DM)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14DM.html#plot-magnetic",
+    "href": "14DM.html#plot-magnetic",
+    "title": "Upupa epops (14DM)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14DM.html#plot-map",
+    "href": "14DM.html#plot-map",
+    "title": "Upupa epops (14DM)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14DM.html#error-to-known",
+    "href": "14DM.html#error-to-known",
+    "title": "Upupa epops (14DM)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16FT.html",
+    "href": "16FT.html",
+    "title": "Acrocephalus arundinaceus (16FT)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:10:06"
+  },
+  {
+    "objectID": "16FT.html#setup",
+    "href": "16FT.html#setup",
+    "title": "Acrocephalus arundinaceus (16FT)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16FT.html#plot-acceleration",
+    "href": "16FT.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (16FT)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16FT.html#plot-magnetic",
+    "href": "16FT.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (16FT)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16FT.html#plot-map",
+    "href": "16FT.html#plot-map",
+    "title": "Acrocephalus arundinaceus (16FT)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16FT.html#error-to-known",
+    "href": "16FT.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (16FT)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "22BT.html",
+    "href": "22BT.html",
+    "title": "Caprimulgus europaeus (22BT)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:09:19"
+  },
+  {
+    "objectID": "22BT.html#setup",
+    "href": "22BT.html#setup",
+    "title": "Caprimulgus europaeus (22BT)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "22BT.html#plot-acceleration",
+    "href": "22BT.html#plot-acceleration",
+    "title": "Caprimulgus europaeus (22BT)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "22BT.html#plot-magnetic",
+    "href": "22BT.html#plot-magnetic",
+    "title": "Caprimulgus europaeus (22BT)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "22BT.html#plot-map",
+    "href": "22BT.html#plot-map",
+    "title": "Caprimulgus europaeus (22BT)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "22BT.html#error-to-known",
+    "href": "22BT.html#error-to-known",
+    "title": "Caprimulgus europaeus (22BT)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14GS.html",
+    "href": "14GS.html",
+    "title": "Acrocephalus arundinaceus (14GS)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:08:28"
+  },
+  {
+    "objectID": "14GS.html#setup",
+    "href": "14GS.html#setup",
+    "title": "Acrocephalus arundinaceus (14GS)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14GS.html#plot-acceleration",
+    "href": "14GS.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (14GS)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14GS.html#plot-magnetic",
+    "href": "14GS.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (14GS)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14GS.html#plot-map",
+    "href": "14GS.html#plot-map",
+    "title": "Acrocephalus arundinaceus (14GS)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14GS.html#error-to-known",
+    "href": "14GS.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (14GS)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16FB.html",
+    "href": "16FB.html",
+    "title": "Acrocephalus arundinaceus (16FB)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:07:33"
+  },
+  {
+    "objectID": "16FB.html#setup",
+    "href": "16FB.html#setup",
+    "title": "Acrocephalus arundinaceus (16FB)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16FB.html#plot-acceleration",
+    "href": "16FB.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (16FB)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16FB.html#plot-magnetic",
+    "href": "16FB.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (16FB)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16FB.html#plot-map",
+    "href": "16FB.html#plot-map",
+    "title": "Acrocephalus arundinaceus (16FB)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16FB.html#error-to-known",
+    "href": "16FB.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (16FB)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "20OE.html",
+    "href": "20OE.html",
+    "title": "Turdus torquatus (20OE)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:06:52"
+  },
+  {
+    "objectID": "20OE.html#setup",
+    "href": "20OE.html#setup",
+    "title": "Turdus torquatus (20OE)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "20OE.html#plot-acceleration",
+    "href": "20OE.html#plot-acceleration",
+    "title": "Turdus torquatus (20OE)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "20OE.html#plot-magnetic",
+    "href": "20OE.html#plot-magnetic",
+    "title": "Turdus torquatus (20OE)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "20OE.html#plot-map",
+    "href": "20OE.html#plot-map",
+    "title": "Turdus torquatus (20OE)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "20OE.html#error-to-known",
+    "href": "20OE.html#error-to-known",
+    "title": "Turdus torquatus (20OE)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "22NO.html",
+    "href": "22NO.html",
+    "title": "Halcyon senegalensis (22NO)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:06:10"
+  },
+  {
+    "objectID": "22NO.html#setup",
+    "href": "22NO.html#setup",
+    "title": "Halcyon senegalensis (22NO)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "22NO.html#plot-acceleration",
+    "href": "22NO.html#plot-acceleration",
+    "title": "Halcyon senegalensis (22NO)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "22NO.html#plot-magnetic",
+    "href": "22NO.html#plot-magnetic",
+    "title": "Halcyon senegalensis (22NO)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "22NO.html#plot-map",
+    "href": "22NO.html#plot-map",
+    "title": "Halcyon senegalensis (22NO)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "22NO.html#error-to-known",
+    "href": "22NO.html#error-to-known",
+    "title": "Halcyon senegalensis (22NO)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14GH.html",
+    "href": "14GH.html",
+    "title": "Acrocephalus arundinaceus (14GH)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:04:47"
+  },
+  {
+    "objectID": "14GH.html#setup",
+    "href": "14GH.html#setup",
+    "title": "Acrocephalus arundinaceus (14GH)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14GH.html#plot-acceleration",
+    "href": "14GH.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (14GH)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14GH.html#plot-magnetic",
+    "href": "14GH.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (14GH)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14GH.html#plot-map",
+    "href": "14GH.html#plot-map",
+    "title": "Acrocephalus arundinaceus (14GH)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14GH.html#error-to-known",
+    "href": "14GH.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (14GH)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16EF.html",
+    "href": "16EF.html",
+    "title": "Upupa epops (16EF)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:04:11"
+  },
+  {
+    "objectID": "16EF.html#setup",
+    "href": "16EF.html#setup",
+    "title": "Upupa epops (16EF)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16EF.html#plot-acceleration",
+    "href": "16EF.html#plot-acceleration",
+    "title": "Upupa epops (16EF)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16EF.html#plot-magnetic",
+    "href": "16EF.html#plot-magnetic",
+    "title": "Upupa epops (16EF)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16EF.html#plot-map",
+    "href": "16EF.html#plot-map",
+    "title": "Upupa epops (16EF)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16EF.html#error-to-known",
+    "href": "16EF.html#error-to-known",
+    "title": "Upupa epops (16EF)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14HC.html",
+    "href": "14HC.html",
+    "title": "Acrocephalus arundinaceus (14HC)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:03:20"
+  },
+  {
+    "objectID": "14HC.html#setup",
+    "href": "14HC.html#setup",
+    "title": "Acrocephalus arundinaceus (14HC)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14HC.html#plot-acceleration",
+    "href": "14HC.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (14HC)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14HC.html#plot-magnetic",
+    "href": "14HC.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (14HC)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14HC.html#plot-map",
+    "href": "14HC.html#plot-map",
+    "title": "Acrocephalus arundinaceus (14HC)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14HC.html#error-to-known",
+    "href": "14HC.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (14HC)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14ES.html",
+    "href": "14ES.html",
+    "title": "Acrocephalus arundinaceus (14ES)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:02:18"
+  },
+  {
+    "objectID": "14ES.html#setup",
+    "href": "14ES.html#setup",
+    "title": "Acrocephalus arundinaceus (14ES)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14ES.html#plot-acceleration",
+    "href": "14ES.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (14ES)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14ES.html#plot-magnetic",
+    "href": "14ES.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (14ES)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14ES.html#plot-map",
+    "href": "14ES.html#plot-map",
+    "title": "Acrocephalus arundinaceus (14ES)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14ES.html#error-to-known",
+    "href": "14ES.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (14ES)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16EG.html",
+    "href": "16EG.html",
+    "title": "Upupa epops (16EG)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:01:41"
+  },
+  {
+    "objectID": "16EG.html#setup",
+    "href": "16EG.html#setup",
+    "title": "Upupa epops (16EG)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16EG.html#plot-acceleration",
+    "href": "16EG.html#plot-acceleration",
+    "title": "Upupa epops (16EG)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16EG.html#plot-magnetic",
+    "href": "16EG.html#plot-magnetic",
+    "title": "Upupa epops (16EG)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16EG.html#plot-map",
+    "href": "16EG.html#plot-map",
+    "title": "Upupa epops (16EG)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16EG.html#error-to-known",
+    "href": "16EG.html#error-to-known",
+    "title": "Upupa epops (16EG)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16FI.html",
+    "href": "16FI.html",
+    "title": "Acrocephalus arundinaceus (16FI)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:00:47"
+  },
+  {
+    "objectID": "16FI.html#setup",
+    "href": "16FI.html#setup",
+    "title": "Acrocephalus arundinaceus (16FI)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16FI.html#plot-acceleration",
+    "href": "16FI.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (16FI)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16FI.html#plot-magnetic",
+    "href": "16FI.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (16FI)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16FI.html#plot-map",
+    "href": "16FI.html#plot-map",
+    "title": "Acrocephalus arundinaceus (16FI)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16FI.html#error-to-known",
+    "href": "16FI.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (16FI)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16CC.html",
+    "href": "16CC.html",
+    "title": "Upupa epops (16CC)",
+    "section": "",
+    "text": "Created on: 2025-08-20 13:59:57"
+  },
+  {
+    "objectID": "16CC.html#setup",
+    "href": "16CC.html#setup",
+    "title": "Upupa epops (16CC)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16CC.html#plot-acceleration",
+    "href": "16CC.html#plot-acceleration",
+    "title": "Upupa epops (16CC)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16CC.html#plot-magnetic",
+    "href": "16CC.html#plot-magnetic",
+    "title": "Upupa epops (16CC)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16CC.html#plot-map",
+    "href": "16CC.html#plot-map",
+    "title": "Upupa epops (16CC)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16CC.html#error-to-known",
+    "href": "16CC.html#error-to-known",
+    "title": "Upupa epops (16CC)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "20IK.html",
+    "href": "20IK.html",
+    "title": "Halcyon senegalensis (20IK)",
+    "section": "",
+    "text": "Created on: 2025-08-20 13:59:23"
+  },
+  {
+    "objectID": "20IK.html#setup",
+    "href": "20IK.html#setup",
+    "title": "Halcyon senegalensis (20IK)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "20IK.html#plot-acceleration",
+    "href": "20IK.html#plot-acceleration",
+    "title": "Halcyon senegalensis (20IK)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "20IK.html#plot-magnetic",
+    "href": "20IK.html#plot-magnetic",
+    "title": "Halcyon senegalensis (20IK)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "20IK.html#plot-map",
+    "href": "20IK.html#plot-map",
+    "title": "Halcyon senegalensis (20IK)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "20IK.html#error-to-known",
+    "href": "20IK.html#error-to-known",
+    "title": "Halcyon senegalensis (20IK)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16LO.html",
+    "href": "16LO.html",
+    "title": "Halcyon senegalensis (16LO)",
+    "section": "",
+    "text": "Created on: 2025-08-20 13:58:48"
+  },
+  {
+    "objectID": "16LO.html#setup",
+    "href": "16LO.html#setup",
+    "title": "Halcyon senegalensis (16LO)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16LO.html#plot-acceleration",
+    "href": "16LO.html#plot-acceleration",
+    "title": "Halcyon senegalensis (16LO)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16LO.html#plot-magnetic",
+    "href": "16LO.html#plot-magnetic",
+    "title": "Halcyon senegalensis (16LO)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16LO.html#plot-map",
+    "href": "16LO.html#plot-map",
+    "title": "Halcyon senegalensis (16LO)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16LO.html#error-to-known",
+    "href": "16LO.html#error-to-known",
+    "title": "Halcyon senegalensis (16LO)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16BR.html",
+    "href": "16BR.html",
+    "title": "Acrocephalus arundinaceus (16BR)",
+    "section": "",
+    "text": "Created on: 2025-08-20 13:58:07"
+  },
+  {
+    "objectID": "16BR.html#setup",
+    "href": "16BR.html#setup",
+    "title": "Acrocephalus arundinaceus (16BR)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16BR.html#plot-acceleration",
+    "href": "16BR.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (16BR)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16BR.html#plot-magnetic",
+    "href": "16BR.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (16BR)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16BR.html#plot-map",
+    "href": "16BR.html#plot-map",
+    "title": "Acrocephalus arundinaceus (16BR)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16BR.html#error-to-known",
+    "href": "16BR.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (16BR)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14OD.html",
+    "href": "14OD.html",
+    "title": "Upupa epops (14OD)",
+    "section": "",
+    "text": "Created on: 2025-08-20 13:57:31"
+  },
+  {
+    "objectID": "14OD.html#setup",
+    "href": "14OD.html#setup",
+    "title": "Upupa epops (14OD)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14OD.html#plot-acceleration",
+    "href": "14OD.html#plot-acceleration",
+    "title": "Upupa epops (14OD)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14OD.html#plot-magnetic",
+    "href": "14OD.html#plot-magnetic",
+    "title": "Upupa epops (14OD)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14OD.html#plot-map",
+    "href": "14OD.html#plot-map",
+    "title": "Upupa epops (14OD)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14OD.html#error-to-known",
+    "href": "14OD.html#error-to-known",
+    "title": "Upupa epops (14OD)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14TZ.html",
+    "href": "14TZ.html",
+    "title": "Acrocephalus arundinaceus (14TZ)",
+    "section": "",
+    "text": "Created on: 2025-08-20 13:56:38"
+  },
+  {
+    "objectID": "14TZ.html#setup",
+    "href": "14TZ.html#setup",
+    "title": "Acrocephalus arundinaceus (14TZ)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14TZ.html#plot-acceleration",
+    "href": "14TZ.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (14TZ)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14TZ.html#plot-magnetic",
+    "href": "14TZ.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (14TZ)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14TZ.html#plot-map",
+    "href": "14TZ.html#plot-map",
+    "title": "Acrocephalus arundinaceus (14TZ)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14TZ.html#error-to-known",
+    "href": "14TZ.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (14TZ)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "24FD.html",
+    "href": "24FD.html",
+    "title": "Caprimulgus europaeus (24FD)",
+    "section": "",
+    "text": "Created on: 2025-08-20 13:55:51"
+  },
+  {
+    "objectID": "24FD.html#setup",
+    "href": "24FD.html#setup",
+    "title": "Caprimulgus europaeus (24FD)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "24FD.html#plot-acceleration",
+    "href": "24FD.html#plot-acceleration",
+    "title": "Caprimulgus europaeus (24FD)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "24FD.html#plot-magnetic",
+    "href": "24FD.html#plot-magnetic",
+    "title": "Caprimulgus europaeus (24FD)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "24FD.html#plot-map",
+    "href": "24FD.html#plot-map",
+    "title": "Caprimulgus europaeus (24FD)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "24FD.html#error-to-known",
+    "href": "24FD.html#error-to-known",
+    "title": "Caprimulgus europaeus (24FD)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16CP.html",
+    "href": "16CP.html",
+    "title": "Upupa epops (16CP)",
+    "section": "",
+    "text": "Created on: 2025-08-20 13:55:31"
+  },
+  {
+    "objectID": "16CP.html#setup",
+    "href": "16CP.html#setup",
+    "title": "Upupa epops (16CP)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16CP.html#plot-acceleration",
+    "href": "16CP.html#plot-acceleration",
+    "title": "Upupa epops (16CP)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16CP.html#plot-magnetic",
+    "href": "16CP.html#plot-magnetic",
+    "title": "Upupa epops (16CP)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16CP.html#plot-map",
+    "href": "16CP.html#plot-map",
+    "title": "Upupa epops (16CP)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16CP.html#error-to-known",
+    "href": "16CP.html#error-to-known",
+    "title": "Upupa epops (16CP)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16AO.html",
+    "href": "16AO.html",
+    "title": "Upupa epops (16AO)",
+    "section": "",
+    "text": "Created on: 2025-08-20 13:56:22"
+  },
+  {
+    "objectID": "16AO.html#setup",
+    "href": "16AO.html#setup",
+    "title": "Upupa epops (16AO)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16AO.html#plot-acceleration",
+    "href": "16AO.html#plot-acceleration",
+    "title": "Upupa epops (16AO)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16AO.html#plot-magnetic",
+    "href": "16AO.html#plot-magnetic",
+    "title": "Upupa epops (16AO)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16AO.html#plot-map",
+    "href": "16AO.html#plot-map",
+    "title": "Upupa epops (16AO)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16AO.html#error-to-known",
+    "href": "16AO.html#error-to-known",
+    "title": "Upupa epops (16AO)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16CD.html",
+    "href": "16CD.html",
+    "title": "Upupa epops (16CD)",
+    "section": "",
+    "text": "Created on: 2025-08-20 13:57:12"
+  },
+  {
+    "objectID": "16CD.html#setup",
+    "href": "16CD.html#setup",
+    "title": "Upupa epops (16CD)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16CD.html#plot-acceleration",
+    "href": "16CD.html#plot-acceleration",
+    "title": "Upupa epops (16CD)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16CD.html#plot-magnetic",
+    "href": "16CD.html#plot-magnetic",
+    "title": "Upupa epops (16CD)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16CD.html#plot-map",
+    "href": "16CD.html#plot-map",
+    "title": "Upupa epops (16CD)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16CD.html#error-to-known",
+    "href": "16CD.html#error-to-known",
+    "title": "Upupa epops (16CD)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16LN.html",
+    "href": "16LN.html",
+    "title": "Halcyon senegalensis (16LN)",
+    "section": "",
+    "text": "Created on: 2025-08-20 13:57:51"
+  },
+  {
+    "objectID": "16LN.html#setup",
+    "href": "16LN.html#setup",
+    "title": "Halcyon senegalensis (16LN)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16LN.html#plot-acceleration",
+    "href": "16LN.html#plot-acceleration",
+    "title": "Halcyon senegalensis (16LN)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16LN.html#plot-magnetic",
+    "href": "16LN.html#plot-magnetic",
+    "title": "Halcyon senegalensis (16LN)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16LN.html#plot-map",
+    "href": "16LN.html#plot-map",
+    "title": "Halcyon senegalensis (16LN)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16LN.html#error-to-known",
+    "href": "16LN.html#error-to-known",
+    "title": "Halcyon senegalensis (16LN)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16CA.html",
+    "href": "16CA.html",
+    "title": "Upupa epops (16CA)",
+    "section": "",
+    "text": "Created on: 2025-08-20 13:58:32"
+  },
+  {
+    "objectID": "16CA.html#setup",
+    "href": "16CA.html#setup",
+    "title": "Upupa epops (16CA)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16CA.html#plot-acceleration",
+    "href": "16CA.html#plot-acceleration",
+    "title": "Upupa epops (16CA)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16CA.html#plot-magnetic",
+    "href": "16CA.html#plot-magnetic",
+    "title": "Upupa epops (16CA)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16CA.html#plot-map",
+    "href": "16CA.html#plot-map",
+    "title": "Upupa epops (16CA)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16CA.html#error-to-known",
+    "href": "16CA.html#error-to-known",
+    "title": "Upupa epops (16CA)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16AJ.html",
+    "href": "16AJ.html",
+    "title": "Upupa epops (16AJ)",
+    "section": "",
+    "text": "Created on: 2025-08-20 13:59:04"
+  },
+  {
+    "objectID": "16AJ.html#setup",
+    "href": "16AJ.html#setup",
+    "title": "Upupa epops (16AJ)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16AJ.html#plot-acceleration",
+    "href": "16AJ.html#plot-acceleration",
+    "title": "Upupa epops (16AJ)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16AJ.html#plot-magnetic",
+    "href": "16AJ.html#plot-magnetic",
+    "title": "Upupa epops (16AJ)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16AJ.html#plot-map",
+    "href": "16AJ.html#plot-map",
+    "title": "Upupa epops (16AJ)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16AJ.html#error-to-known",
+    "href": "16AJ.html#error-to-known",
+    "title": "Upupa epops (16AJ)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16BG.html",
+    "href": "16BG.html",
+    "title": "Upupa epops (16BG)",
+    "section": "",
+    "text": "Created on: 2025-08-20 13:59:39"
+  },
+  {
+    "objectID": "16BG.html#setup",
+    "href": "16BG.html#setup",
+    "title": "Upupa epops (16BG)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16BG.html#plot-acceleration",
+    "href": "16BG.html#plot-acceleration",
+    "title": "Upupa epops (16BG)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16BG.html#plot-magnetic",
+    "href": "16BG.html#plot-magnetic",
+    "title": "Upupa epops (16BG)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16BG.html#plot-map",
+    "href": "16BG.html#plot-map",
+    "title": "Upupa epops (16BG)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16BG.html#error-to-known",
+    "href": "16BG.html#error-to-known",
+    "title": "Upupa epops (16BG)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16ER.html",
+    "href": "16ER.html",
+    "title": "Acrocephalus arundinaceus (16ER)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:00:12"
+  },
+  {
+    "objectID": "16ER.html#setup",
+    "href": "16ER.html#setup",
+    "title": "Acrocephalus arundinaceus (16ER)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16ER.html#plot-acceleration",
+    "href": "16ER.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (16ER)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16ER.html#plot-magnetic",
+    "href": "16ER.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (16ER)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16ER.html#plot-map",
+    "href": "16ER.html#plot-map",
+    "title": "Acrocephalus arundinaceus (16ER)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16ER.html#error-to-known",
+    "href": "16ER.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (16ER)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16HB.html",
+    "href": "16HB.html",
+    "title": "Acrocephalus arundinaceus (16HB)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:01:14"
+  },
+  {
+    "objectID": "16HB.html#setup",
+    "href": "16HB.html#setup",
+    "title": "Acrocephalus arundinaceus (16HB)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16HB.html#plot-acceleration",
+    "href": "16HB.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (16HB)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16HB.html#plot-magnetic",
+    "href": "16HB.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (16HB)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16HB.html#plot-map",
+    "href": "16HB.html#plot-map",
+    "title": "Acrocephalus arundinaceus (16HB)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16HB.html#error-to-known",
+    "href": "16HB.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (16HB)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14HB.html",
+    "href": "14HB.html",
+    "title": "Acrocephalus arundinaceus (14HB)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:01:58"
+  },
+  {
+    "objectID": "14HB.html#setup",
+    "href": "14HB.html#setup",
+    "title": "Acrocephalus arundinaceus (14HB)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14HB.html#plot-acceleration",
+    "href": "14HB.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (14HB)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14HB.html#plot-magnetic",
+    "href": "14HB.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (14HB)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14HB.html#plot-map",
+    "href": "14HB.html#plot-map",
+    "title": "Acrocephalus arundinaceus (14HB)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14HB.html#error-to-known",
+    "href": "14HB.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (14HB)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14HT.html",
+    "href": "14HT.html",
+    "title": "Acrocephalus arundinaceus (14HT)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:02:54"
+  },
+  {
+    "objectID": "14HT.html#setup",
+    "href": "14HT.html#setup",
+    "title": "Acrocephalus arundinaceus (14HT)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14HT.html#plot-acceleration",
+    "href": "14HT.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (14HT)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14HT.html#plot-magnetic",
+    "href": "14HT.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (14HT)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14HT.html#plot-map",
+    "href": "14HT.html#plot-map",
+    "title": "Acrocephalus arundinaceus (14HT)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14HT.html#error-to-known",
+    "href": "14HT.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (14HT)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16DU.html",
+    "href": "16DU.html",
+    "title": "Upupa epops (16DU)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:03:58"
+  },
+  {
+    "objectID": "16DU.html#setup",
+    "href": "16DU.html#setup",
+    "title": "Upupa epops (16DU)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16DU.html#plot-acceleration",
+    "href": "16DU.html#plot-acceleration",
+    "title": "Upupa epops (16DU)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16DU.html#plot-magnetic",
+    "href": "16DU.html#plot-magnetic",
+    "title": "Upupa epops (16DU)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16DU.html#plot-map",
+    "href": "16DU.html#plot-map",
+    "title": "Upupa epops (16DU)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16DU.html#error-to-known",
+    "href": "16DU.html#error-to-known",
+    "title": "Upupa epops (16DU)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16DF.html",
+    "href": "16DF.html",
+    "title": "Upupa epops (16DF)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:04:28"
+  },
+  {
+    "objectID": "16DF.html#setup",
+    "href": "16DF.html#setup",
+    "title": "Upupa epops (16DF)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16DF.html#plot-acceleration",
+    "href": "16DF.html#plot-acceleration",
+    "title": "Upupa epops (16DF)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16DF.html#plot-magnetic",
+    "href": "16DF.html#plot-magnetic",
+    "title": "Upupa epops (16DF)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16DF.html#plot-map",
+    "href": "16DF.html#plot-map",
+    "title": "Upupa epops (16DF)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16DF.html#error-to-known",
+    "href": "16DF.html#error-to-known",
+    "title": "Upupa epops (16DF)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16ET.html",
+    "href": "16ET.html",
+    "title": "Acrocephalus arundinaceus (16ET)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:05:23"
+  },
+  {
+    "objectID": "16ET.html#setup",
+    "href": "16ET.html#setup",
+    "title": "Acrocephalus arundinaceus (16ET)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16ET.html#plot-acceleration",
+    "href": "16ET.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (16ET)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16ET.html#plot-magnetic",
+    "href": "16ET.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (16ET)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16ET.html#plot-map",
+    "href": "16ET.html#plot-map",
+    "title": "Acrocephalus arundinaceus (16ET)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16ET.html#error-to-known",
+    "href": "16ET.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (16ET)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14GG.html",
+    "href": "14GG.html",
+    "title": "Acrocephalus arundinaceus (14GG)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:06:26"
+  },
+  {
+    "objectID": "14GG.html#setup",
+    "href": "14GG.html#setup",
+    "title": "Acrocephalus arundinaceus (14GG)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14GG.html#plot-acceleration",
+    "href": "14GG.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (14GG)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14GG.html#plot-magnetic",
+    "href": "14GG.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (14GG)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14GG.html#plot-map",
+    "href": "14GG.html#plot-map",
+    "title": "Acrocephalus arundinaceus (14GG)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14GG.html#error-to-known",
+    "href": "14GG.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (14GG)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14GF.html",
+    "href": "14GF.html",
+    "title": "Acrocephalus arundinaceus (14GF)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:07:05"
+  },
+  {
+    "objectID": "14GF.html#setup",
+    "href": "14GF.html#setup",
+    "title": "Acrocephalus arundinaceus (14GF)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14GF.html#plot-acceleration",
+    "href": "14GF.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (14GF)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14GF.html#plot-magnetic",
+    "href": "14GF.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (14GF)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14GF.html#plot-map",
+    "href": "14GF.html#plot-map",
+    "title": "Acrocephalus arundinaceus (14GF)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14GF.html#error-to-known",
+    "href": "14GF.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (14GF)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14GD.html",
+    "href": "14GD.html",
+    "title": "Acrocephalus arundinaceus (14GD)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:07:56"
+  },
+  {
+    "objectID": "14GD.html#setup",
+    "href": "14GD.html#setup",
+    "title": "Acrocephalus arundinaceus (14GD)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14GD.html#plot-acceleration",
+    "href": "14GD.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (14GD)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14GD.html#plot-magnetic",
+    "href": "14GD.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (14GD)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14GD.html#plot-map",
+    "href": "14GD.html#plot-map",
+    "title": "Acrocephalus arundinaceus (14GD)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14GD.html#error-to-known",
+    "href": "14GD.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (14GD)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "12HM.html",
+    "href": "12HM.html",
+    "title": "Upupa epops (12HM)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:08:59"
+  },
+  {
+    "objectID": "12HM.html#setup",
+    "href": "12HM.html#setup",
+    "title": "Upupa epops (12HM)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "12HM.html#plot-acceleration",
+    "href": "12HM.html#plot-acceleration",
+    "title": "Upupa epops (12HM)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "12HM.html#plot-magnetic",
+    "href": "12HM.html#plot-magnetic",
+    "title": "Upupa epops (12HM)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "12HM.html#plot-map",
+    "href": "12HM.html#plot-map",
+    "title": "Upupa epops (12HM)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "12HM.html#error-to-known",
+    "href": "12HM.html#error-to-known",
+    "title": "Upupa epops (12HM)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14EZ.html",
+    "href": "14EZ.html",
+    "title": "Upupa epops (14EZ)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:09:46"
+  },
+  {
+    "objectID": "14EZ.html#setup",
+    "href": "14EZ.html#setup",
+    "title": "Upupa epops (14EZ)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14EZ.html#plot-acceleration",
+    "href": "14EZ.html#plot-acceleration",
+    "title": "Upupa epops (14EZ)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14EZ.html#plot-magnetic",
+    "href": "14EZ.html#plot-magnetic",
+    "title": "Upupa epops (14EZ)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14EZ.html#plot-map",
+    "href": "14EZ.html#plot-map",
+    "title": "Upupa epops (14EZ)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14EZ.html#error-to-known",
+    "href": "14EZ.html#error-to-known",
+    "title": "Upupa epops (14EZ)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16HL.html",
+    "href": "16HL.html",
+    "title": "Acrocephalus arundinaceus (16HL)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:10:27"
+  },
+  {
+    "objectID": "16HL.html#setup",
+    "href": "16HL.html#setup",
+    "title": "Acrocephalus arundinaceus (16HL)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16HL.html#plot-acceleration",
+    "href": "16HL.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (16HL)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16HL.html#plot-magnetic",
+    "href": "16HL.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (16HL)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16HL.html#plot-map",
+    "href": "16HL.html#plot-map",
+    "title": "Acrocephalus arundinaceus (16HL)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16HL.html#error-to-known",
+    "href": "16HL.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (16HL)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16DL.html",
+    "href": "16DL.html",
+    "title": "Upupa epops (16DL)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:11:14"
+  },
+  {
+    "objectID": "16DL.html#setup",
+    "href": "16DL.html#setup",
+    "title": "Upupa epops (16DL)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16DL.html#plot-acceleration",
+    "href": "16DL.html#plot-acceleration",
+    "title": "Upupa epops (16DL)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16DL.html#plot-magnetic",
+    "href": "16DL.html#plot-magnetic",
+    "title": "Upupa epops (16DL)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16DL.html#plot-map",
+    "href": "16DL.html#plot-map",
+    "title": "Upupa epops (16DL)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16DL.html#error-to-known",
+    "href": "16DL.html#error-to-known",
+    "title": "Upupa epops (16DL)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14EJ.html",
+    "href": "14EJ.html",
+    "title": "Upupa epops (14EJ)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:11:48"
+  },
+  {
+    "objectID": "14EJ.html#setup",
+    "href": "14EJ.html#setup",
+    "title": "Upupa epops (14EJ)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14EJ.html#plot-acceleration",
+    "href": "14EJ.html#plot-acceleration",
+    "title": "Upupa epops (14EJ)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14EJ.html#plot-magnetic",
+    "href": "14EJ.html#plot-magnetic",
+    "title": "Upupa epops (14EJ)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14EJ.html#plot-map",
+    "href": "14EJ.html#plot-map",
+    "title": "Upupa epops (14EJ)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14EJ.html#error-to-known",
+    "href": "14EJ.html#error-to-known",
+    "title": "Upupa epops (14EJ)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "22BS.html",
+    "href": "22BS.html",
+    "title": "Caprimulgus europaeus (22BS)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:12:33"
+  },
+  {
+    "objectID": "22BS.html#setup",
+    "href": "22BS.html#setup",
+    "title": "Caprimulgus europaeus (22BS)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "22BS.html#plot-acceleration",
+    "href": "22BS.html#plot-acceleration",
+    "title": "Caprimulgus europaeus (22BS)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "22BS.html#plot-magnetic",
+    "href": "22BS.html#plot-magnetic",
+    "title": "Caprimulgus europaeus (22BS)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "22BS.html#plot-map",
+    "href": "22BS.html#plot-map",
+    "title": "Caprimulgus europaeus (22BS)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "22BS.html#error-to-known",
+    "href": "22BS.html#error-to-known",
+    "title": "Caprimulgus europaeus (22BS)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16GA.html",
+    "href": "16GA.html",
+    "title": "Acrocephalus arundinaceus (16GA)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:13:04"
+  },
+  {
+    "objectID": "16GA.html#setup",
+    "href": "16GA.html#setup",
+    "title": "Acrocephalus arundinaceus (16GA)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16GA.html#plot-acceleration",
+    "href": "16GA.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (16GA)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16GA.html#plot-magnetic",
+    "href": "16GA.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (16GA)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16GA.html#plot-map",
+    "href": "16GA.html#plot-map",
+    "title": "Acrocephalus arundinaceus (16GA)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16GA.html#error-to-known",
+    "href": "16GA.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (16GA)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "16AQ.html",
+    "href": "16AQ.html",
+    "title": "Upupa epops (16AQ)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:14:04"
+  },
+  {
+    "objectID": "16AQ.html#setup",
+    "href": "16AQ.html#setup",
+    "title": "Upupa epops (16AQ)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "16AQ.html#plot-acceleration",
+    "href": "16AQ.html#plot-acceleration",
+    "title": "Upupa epops (16AQ)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "16AQ.html#plot-magnetic",
+    "href": "16AQ.html#plot-magnetic",
+    "title": "Upupa epops (16AQ)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "16AQ.html#plot-map",
+    "href": "16AQ.html#plot-map",
+    "title": "Upupa epops (16AQ)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "16AQ.html#error-to-known",
+    "href": "16AQ.html#error-to-known",
+    "title": "Upupa epops (16AQ)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "14TF.html",
+    "href": "14TF.html",
+    "title": "Acrocephalus arundinaceus (14TF)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:14:45"
+  },
+  {
+    "objectID": "14TF.html#setup",
+    "href": "14TF.html#setup",
+    "title": "Acrocephalus arundinaceus (14TF)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "14TF.html#plot-acceleration",
+    "href": "14TF.html#plot-acceleration",
+    "title": "Acrocephalus arundinaceus (14TF)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "14TF.html#plot-magnetic",
+    "href": "14TF.html#plot-magnetic",
+    "title": "Acrocephalus arundinaceus (14TF)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "14TF.html#plot-map",
+    "href": "14TF.html#plot-map",
+    "title": "Acrocephalus arundinaceus (14TF)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "14TF.html#error-to-known",
+    "href": "14TF.html#error-to-known",
+    "title": "Acrocephalus arundinaceus (14TF)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "basic_illustration.html",
+    "href": "basic_illustration.html",
+    "title": "unknown (16FT)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:15:18"
+  },
+  {
+    "objectID": "basic_illustration.html#setup",
+    "href": "basic_illustration.html#setup",
+    "title": "unknown (16FT)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "basic_illustration.html#plot-acceleration",
+    "href": "basic_illustration.html#plot-acceleration",
+    "title": "unknown (16FT)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "basic_illustration.html#plot-magnetic",
+    "href": "basic_illustration.html#plot-magnetic",
+    "title": "unknown (16FT)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "basic_illustration.html#plot-map",
+    "href": "basic_illustration.html#plot-map",
+    "title": "unknown (16FT)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "basic_illustration.html#error-to-known",
+    "href": "basic_illustration.html#error-to-known",
+    "title": "unknown (16FT)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  },
+  {
+    "objectID": "22QQ.html",
+    "href": "22QQ.html",
+    "title": "Turdus torquatus (22QQ)",
+    "section": "",
+    "text": "Created on: 2025-08-20 14:15:59"
+  },
+  {
+    "objectID": "22QQ.html#setup",
+    "href": "22QQ.html#setup",
+    "title": "Turdus torquatus (22QQ)",
+    "section": "Setup",
+    "text": "Setup\n\n\nCode\nlibrary(GeoPressureR)\nlibrary(GeoMag)\nlibrary(ggplot2)\nlibrary(tidyverse)\n\nid &lt;- params$id\n\nload(here::here(glue::glue(\"data/interim/{id}.RData\")))\npath &lt;- read_csv(here::here(\"data/dist2ref.csv\"), show_col_types = FALSE) %&gt;% \n  filter(tag_id==id & j==0)"
+  },
+  {
+    "objectID": "22QQ.html#plot-acceleration",
+    "href": "22QQ.html#plot-acceleration",
+    "title": "Turdus torquatus (22QQ)",
+    "section": "Plot acceleration",
+    "text": "Plot acceleration\n\n\nCode\ndf_magnetic &lt;- tag$magnetic %&gt;%\n  filter(is_static &lt; 1) %&gt;%\n  pivot_longer(acceleration_x:acceleration_z, names_to = \"Component\", values_to = \"Value\")\n\nggplot(df_magnetic, aes(x = Value)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"black\", alpha = 0.7) +\n  facet_wrap(~Component, scales = \"fixed\") + # Fixed scales for uniform axes\n  xlim(-max(abs(df_magnetic$Value)), max(abs(df_magnetic$Value))) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag,\"acceleration\")\n\n\n\n\n\n\n\n\nCode\ntag$magnetic %&gt;%\n  filter(is_static &lt; 4) %&gt;%\n  transmute(\n    pitch = pitch / pi * 180,\n    roll = roll / pi * 180\n  ) %&gt;%\n  pivot_longer(cols = c(pitch, roll), names_to = \"variable\", values_to = \"value\") %&gt;%\n  ggplot(aes(x = value)) +\n  geom_histogram(bins = 30, fill = \"gray\", color = \"black\") +\n  facet_wrap(~variable, scales = \"free_x\") +\n  labs(x = \"Angle (degrees)\", y = \"Count\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "22QQ.html#plot-magnetic",
+    "href": "22QQ.html#plot-magnetic",
+    "title": "Turdus torquatus (22QQ)",
+    "section": "Plot Magnetic",
+    "text": "Plot Magnetic\n\n\nCode\nplot_mag(tag, type=\"calib\")"
+  },
+  {
+    "objectID": "22QQ.html#plot-map",
+    "href": "22QQ.html#plot-map",
+    "title": "Turdus torquatus (22QQ)",
+    "section": "Plot Map",
+    "text": "Plot Map\n\n\nCode\nplot(tag, \"map_magnetic_intensity\", path = path)\n\n\n\n\n\n\nCode\nplot(tag, \"map_magnetic_inclination\", path = path)"
+  },
+  {
+    "objectID": "22QQ.html#error-to-known",
+    "href": "22QQ.html#error-to-known",
+    "title": "Turdus torquatus (22QQ)",
+    "section": "Error to known",
+    "text": "Error to known\n\n\nCode\nplot_mag(tag, type=\"timeseries\", path = path)\n\n\n\n\n\n\n\n\nCode\nplot_mag(tag, type=\"histogram\", path = path)"
+  }
+]
