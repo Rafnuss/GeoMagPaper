@@ -1,0 +1,25 @@
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main   # run on pushes to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Copy site
+        run: |
+          mkdir site
+          cp -r basic_illustration/_site/* site/
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          publish_branch: gh-pages
